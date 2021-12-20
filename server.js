@@ -13,14 +13,20 @@ app.use(express.static("./public"));
 // json() is a method inbuilt in express to recognize the incoming request object 
 app.use(express.json());
 
-// activate the getAllFood if the route is GET(method)
+// activate the getAllFood if the route is GET(method) /food
 app.route('/food').get(foodController.getAllFood); 
 
-// activate the getAllReviews method if the route is GET(method) /comments
+// activate the getAllReviews method if the route is GET(method) /reviews
 app.route('/reviews').get(reviewController.getAllReviews);
 
-// activate the addReview method if the method is POST(method) /comments
+// activate the addReview method if the method is POST(method) /reviews
 app.route('/reviews').post(reviewController.addReview);
+
+// activate the updateReview if the method is PUT(method)/ reviews
+app.route('/reviews/:id').put(reviewController.updateReview);
+
+// activate the delete review method if the route is DELETE(method) /comments
+app.route('/reviews/:id').delete(reviewController.deleteReview);
 
 // start the nodejs to be listening for the incoming request @ port 8080
 app.listen(8080, "127.0.0.1");

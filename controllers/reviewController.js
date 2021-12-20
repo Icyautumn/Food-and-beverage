@@ -30,4 +30,30 @@ function addReview(request, respond) {
     })
 };
 
-module.exports = {getAllReviews, addReview};
+function updateReview(request, respond) {
+    var now = new Date();
+    var review = new Review(parseInt(request.params.id), request.body.Customer_ID, 
+    request.body.Food_ID, request.body.Review, request.body.Rating, now.toString(), request.body.First_Name);
+    reviewsDB.updateReview(review, function(error, result){
+        if(error){
+            respond.json(error);
+        }
+        else{
+            respond.json(result);
+        }
+    });
+}
+
+function deleteReview(request, respond){
+    var reviewID = request.params.id;
+    reviewsDB.deleteReview(reviewID, function(error, result){
+        if(error){
+            respond.json(error);
+        }
+        else{
+            respond.json(result);
+        }
+    });
+} 
+
+module.exports = {getAllReviews, addReview, updateReview, deleteReview};
