@@ -1,0 +1,13 @@
+footer {
+    background: #aaa;
+    color: white;
+}
+
+.edit {
+    float: right;
+    padding-right: 10px;
+}
+
+#navbarSupportedContent{
+    font-size: 50px;
+}
