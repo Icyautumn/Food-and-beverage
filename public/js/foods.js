@@ -10,7 +10,7 @@ function getFoodData() {
     food_array = JSON.parse(request.responseText);
 
     //Fetch the reviews as well
-    // fetchReview();
+    fetchReviews();
     console.log(food_array); // output to console
 
     // call the function so as to display all movies titles for "popular"
@@ -33,7 +33,8 @@ function displayFood(category) {
         var picture = food_array[count].Picture;
         var title = food_array[count].title;
         var cell =
-          '<div class="card col-md-3" ><img class="card-img-top" src="' +
+          '<div class="card col-md" >\
+          <img class="card-img-top" src="' +
           picture +
           '" alt="Card image cap">\
                             <div class="card-body"><i class="far fa-comment fa-lg" style="float:left;cursor:pointer" data-toggle="modal" data-target="#reviewModal" item="' +
@@ -49,6 +50,8 @@ function displayFood(category) {
         table.insertAdjacentHTML("beforeend", cell);
         foodCount++;
       }
+      // <div class="card bg-dark text-light"><div class="card-body text-center">\
+      // <div class="h1 mb-3"><img class="card-img-top" src"' + picture + '" alt="Card image cap">\
     }
   }
   if (category == "available") {
