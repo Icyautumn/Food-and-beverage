@@ -36,9 +36,9 @@ function displayFood(category) {
           '<div class="card col-md-3" ><img class="card-img-top" src="' +
           picture +
           '" alt="Card image cap">\
-                            <div class="card-body"><i class="far fa-comment fa-lg" style="float:left;cursor:pointer" data-toggle="modal" data-target="#commentModal" item="' +
+                            <div class="card-body"><i class="far fa-comment fa-lg" style="float:left;cursor:pointer" data-toggle="modal" data-target="#reviewModal" item="' +
           count +
-          '" onClick="showFoodComments(this)"></i>\
+          '" onClick="showFoodReviews(this)"></i>\
                             <h5 style="padding-left:30px;cursor:pointer" data-toggle="modal" data-target="#foodModal" class="card-title" item="' +
           count +
           '" onClick="showFoodDetails(this)">' +
@@ -60,9 +60,9 @@ function displayFood(category) {
           '<div class="card col-md-3" ><img class="card-img-top" src="' +
           picture +
           '" alt="Card image cap">\
-                        <div class="card-body"><i class="far fa-comment fa-lg" style="float:left;cursor:pointer" data-toggle="modal" data-target="#commentModal" item="' +
+                        <div class="card-body"><i class="far fa-comment fa-lg" style="float:left;cursor:pointer" data-toggle="modal" data-target="#reviewModal" item="' +
           count +
-          '" onClick="showFoodComments(this)"></i>\
+          '" onClick="showFoodReviews(this)"></i>\
                         <h5 style="padding-left:30px;cursor:pointer" data-toggle="modal" data-target="#foodModal" class="card-title" item="' +
           count +
           '" onClick="showFoodDetails(this)">' +
