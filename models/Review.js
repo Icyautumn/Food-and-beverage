@@ -1,7 +1,7 @@
 "use strict";
 
 class Review {
-    constructor(Review_ID, Customer_ID, Food_ID, Review, Rating, Post_Date, First_Name){
+    constructor(Review_ID, Customer_ID, Food_ID, Review, Rating, Post_Date, First_Name, title){
         this.Review_ID = Review_ID;
         this.Customer_ID = Customer_ID;
         this.Food_ID = Food_ID;
@@ -9,6 +9,7 @@ class Review {
         this.Rating = Rating;
         this.Post_Date = Post_Date;
         this.First_Name = First_Name;
+        this.title = title;
     }
 
     getReview_ID() {
@@ -39,6 +40,10 @@ class Review {
         return this.First_Name;
     }
 
+    gettitle(){
+        return this.title;
+    }
+
     setReview_ID(review_ID) {
         this.review_ID = review_ID;
     }
@@ -65,6 +70,10 @@ class Review {
 
     setFirst_Name(First_Name) {
         this.First_Name = First_Name;
+    }
+
+    settitle(title){
+        this.title = title;
     }
 }
 

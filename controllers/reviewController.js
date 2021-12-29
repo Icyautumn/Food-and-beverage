@@ -19,7 +19,8 @@ function getAllReviews(request, respond) {
 
 function addReview(request, respond) {
     var now = new Date();
-    var review = new Review(null, request.body.Customer_ID, request.body.Food_ID, request.body.Review, request.body.Rating, now.toString(), request.body.First_Name);
+    var review = new Review(null, request.body.Customer_ID, request.body.Food_ID, request.body.Review, request.body.Rating, now.toString(),
+     request.body.First_Name, request.body.title);
     reviewsDB.addReview(review, function (error, result) {
         if(error) {
             respond.json(error);
@@ -33,7 +34,7 @@ function addReview(request, respond) {
 function updateReview(request, respond) {
     var now = new Date();
     var review = new Review(parseInt(request.params.id), request.body.Customer_ID, 
-    request.body.Food_ID, request.body.Review, request.body.Rating, now.toString(), request.body.First_Name);
+    request.body.Food_ID, request.body.Review, request.body.Rating, now.toString(), request.body.First_Name, request.body.title);
     reviewsDB.updateReview(review, function(error, result){
         if(error){
             respond.json(error);

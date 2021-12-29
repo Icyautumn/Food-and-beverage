@@ -5,7 +5,8 @@ function showFoodReviews(element) {
   document.getElementById("emptyReview").innerHTML =
     "No Review Yet. Create one now";
   var item = element.getAttribute("item");
-  currentindex = item;
+  currentIndex = item;
+
   document.getElementById("review").textContent =
     "Review for " + food_array[item].title;
   document.getElementById("reviewBody").textContent = "";
@@ -62,7 +63,7 @@ function showFoodReviews(element) {
 function fetchReviews() {
   var request = new XMLHttpRequest();
 
-  request.open("GET", review_url, true);
+  request.open('GET', review_url, true);
 
   // This command starts the calling of the reviews api
   request.onload = function () {
@@ -71,6 +72,12 @@ function fetchReviews() {
     console.log(review_array);
   };
   request.send();
+}
+
+function showFoodDetails(element) {
+  var item = element.getAttribute("item");
+  currentIndex = item;
+  document.getElementById("foodTitle").textContent = food_array[item].title;
 }
 
 function newReview() {
@@ -86,7 +93,7 @@ function addReview() {
   // food ID is require by server to create new comment
   reviews.Food_ID = food_array[currentIndex].Food_id;
   // food title is required by server to create new review
-  reviews.
+  reviews.title = food_array[currentIndex].title;
   reviews.First_Name = document.getElementById("nickname").value;
   reviews.Review = document.getElementById("userReviews").value;
   reviews.Post_Date = null;
