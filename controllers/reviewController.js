@@ -2,7 +2,9 @@
 
 const ReviewsDB = require('../models/ReviewsDB');
 const Review = require('../models/Review');
-
+const bcrypt = require('bcrypt');
+var jwt = require('jsonwebtoken');
+var secret = 'somesecretkey';
 var reviewsDB = new ReviewsDB();
 
 function getAllReviews(request, respond) {
@@ -16,6 +18,8 @@ function getAllReviews(request, respond) {
         }
     });
 }
+
+
 
 function addReview(request, respond) {
     var now = new Date();
@@ -31,6 +35,7 @@ function addReview(request, respond) {
     })
 };
 
+
 function updateReview(request, respond) {
     var now = new Date();
     var review = new Review(parseInt(request.params.id), request.body.Customer_ID, 
@@ -40,7 +45,16 @@ function updateReview(request, respond) {
             respond.json(error);
         }
         else{
-            respond.json(result);
+            const hash = result[0].password;
+            // compare the encrypted password with the clear text, if its the same, flag is true
+            var flag = bcrypt.compareSync(password, hash);
+            if (flag){
+                var token = jwt.sign(Email, secret);
+                return respond.json({result:token});
+            }
+            else{
+                return respond.json({result:"invalid token"});
+            }
         }
     });
 }

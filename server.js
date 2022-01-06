@@ -4,6 +4,9 @@ var express = require("express");
 // set foodController to the foodController class
 var foodController = require("./controllers/foodController");
 var reviewController = require('./controllers/reviewController');
+var userController = require('./controllers/userController');
+var favouriteController = require('./controllers/favouriteController');
+
 
 // set variable app to be an instance of express framework. from now on, app is the express
 var app = express(); 
@@ -16,6 +19,8 @@ app.use(express.json());
 // activate the getAllFood if the route is GET(method) /food
 app.route('/food').get(foodController.getAllFood); 
 
+app.route('/food/:id').get(foodController.getSpecificFood)
+
 // activate the getAllReviews method if the route is GET(method) /reviews
 app.route('/reviews').get(reviewController.getAllReviews);
 
@@ -27,6 +32,21 @@ app.route('/reviews/:id').put(reviewController.updateReview);
 
 // activate the delete review method if the route is DELETE(method) /comments
 app.route('/reviews/:id').delete(reviewController.deleteReview);
+
+// user database postman 
+app.route('/users').get(userController.getAllUser);
+app.route('/users').post(userController.addUser);
+app.route('/users').put(userController.updateUser);
+app.route('/users/:id').delete(userController.deleteUser);
+app.route('/login').post(userController.loginUser);
+
+// favourite database 
+app.route('/favourite').get(favouriteController.getAllFavourites);
+app.route('/favourite/:id').get(favouriteController.getSpecificFavourite);
+app.route('/favourite').post(favouriteController.addFavourite);
+app.route('/favourite/:id').delete(favouriteController.deleteFavourite);
+
+
 
 // start the nodejs to be listening for the incoming request @ port 8080
 app.listen(8080, "127.0.0.1");

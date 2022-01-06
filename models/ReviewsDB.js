@@ -8,6 +8,7 @@ class ReviewsDB {
         db.query(sql, callback);
     }
 
+
     addReview(review, callback){
         // the question marks are the placeholders
         var sql = "INSERT INTO reviews (Customer_ID, Food_ID, Review, Rating, Post_Date, First_Name, title) VALUES (?, ?, ?, ?, ?, ?, ?)";

@@ -14,4 +14,17 @@ function getAllFood(request, respond){
     });
 }
 
-module.exports = {getAllFood};
+function getSpecificFood(request, respond) {
+    var reviewID = request.params.id;
+
+    FoodDB.getSpecificFood(reviewID, function(error, result){
+        if(error) {
+            respond.json(error);
+        }
+        else{
+            respond.json(result);
+        }
+    });
+}
+
+module.exports = {getAllFood, getSpecificFood};
