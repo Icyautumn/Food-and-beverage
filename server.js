@@ -16,10 +16,10 @@ app.use(express.static("./public"));
 // json() is a method inbuilt in express to recognize the incoming request object 
 app.use(express.json());
 
-// activate the getAllFood if the route is GET(method) /food
-app.route('/food').get(foodController.getAllFood); 
+// activate the getAllRestaurants if the route is GET(method) /food
+app.route('/restaurant').get(foodController.getAllRestaurants); 
 
-app.route('/food/:id').get(foodController.getSpecificFood)
+app.route('/restaurant/specifics').get(foodController.GetTypeOfRestaurants)
 
 // activate the getAllReviews method if the route is GET(method) /reviews
 app.route('/reviews').get(reviewController.getAllReviews);
@@ -41,9 +41,9 @@ app.route('/users/:id').delete(userController.deleteUser);
 app.route('/login').post(userController.loginUser);
 
 // favourite database 
-app.route('/favourite').get(favouriteController.getAllFavourites);
+app.route('/favourites').get(favouriteController.getAllFavourites);
 app.route('/favourite/:id').get(favouriteController.getSpecificFavourite);
-app.route('/favourite').post(favouriteController.addFavourite);
+app.route('/favourites').post(favouriteController.addFavourite);
 app.route('/favourite/:id').delete(favouriteController.deleteFavourite);
 
 

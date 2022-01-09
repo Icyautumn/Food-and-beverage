@@ -1,14 +1,13 @@
 "use strict";
 
 class Review {
-    constructor(Review_ID, Customer_ID, Food_ID, Review, Rating, Post_Date, First_Name, title){
+    constructor(Review_ID, Customer_username, RestaurantID, Review, Rating, title, Post_Date){
         this.Review_ID = Review_ID;
-        this.Customer_ID = Customer_ID;
-        this.Food_ID = Food_ID;
+        this.Customer_username = Customer_username;
+        this.RestaurantID = RestaurantID;
         this.Review = Review;
         this.Rating = Rating;
         this.Post_Date = Post_Date;
-        this.First_Name = First_Name;
         this.title = title;
     }
 
@@ -16,12 +15,12 @@ class Review {
         return this.Review_ID;
     }
 
-    getCustomer_ID() {
-        return this.Customer_ID;
+    getCustomer_username() {
+        return this.Customer_username;
     }
 
-    getFood_ID() {
-        return this.Food_ID;
+    getRestaurantID() {
+        return this.RestaurantID;
     }
 
     getReview() {
@@ -36,9 +35,6 @@ class Review {
         return this.Post_Date;
     }
 
-    getFirst_Name() {
-        return this.First_Name;
-    }
 
     gettitle(){
         return this.title;
@@ -48,12 +44,12 @@ class Review {
         this.review_ID = review_ID;
     }
 
-    setCustomer_ID(Customer_ID) {
-        this.Customer_ID = Customer_ID;
+    setCustomer_username(Customer_username) {
+        this.Customer_username = Customer_username;
     }
 
-    setFood_ID(Food_ID) {
-        this.Food_ID = Food_ID;
+    setRestaurantID(RestaurantID) {
+        this.RestaurantID = RestaurantID;
     }
 
     setReview(Review) {
@@ -68,9 +64,6 @@ class Review {
         this.Post_Date = Post_Date;
     }
 
-    setFirst_Name(First_Name) {
-        this.First_Name = First_Name;
-    }
 
     settitle(title){
         this.title = title;

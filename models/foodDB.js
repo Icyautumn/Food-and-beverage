@@ -3,14 +3,14 @@
 var db = require('../db-connections');
 
 class foodDB{
-    getAllFood(callback){
+    getAllRestaurants(callback){
         var sql = "SELECT * FROM food_n_beverage.food";
         db.query(sql, callback);
     }
 
-    getSpecificFood(ReviewID, callback){
-        var sql = "SELECT * FROM food WHERE Food_id = ?";
-        return db.query(sql,[ReviewID], callback);
+    GetTypeOfRestaurants(TypeOfRestaurant, callback){
+        var sql = "SELECT * FROM food WHERE TypeOfRestaurant = ?";
+        return db.query(sql,[TypeOfRestaurant], callback);
     }
 }
 

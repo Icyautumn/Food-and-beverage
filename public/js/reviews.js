@@ -12,9 +12,9 @@ function showFoodReviews(element) {
   document.getElementById("reviewBody").textContent = "";
 
   for (var i = 0; i < review_array.length; i++) {
-    if (review_array[i].Food_ID === food_array[item].Food_id) {
+    if (review_array[i].RestaurantID === food_array[item].RestaurantID) {
       document.getElementById("emptyReview").innerHTML = "";
-      selectedFoodID = food_array[item].Food_id;
+      selectedFoodID = food_array[item].RestaurantID;
       star = "";
       var html =
         '<div class="text-center" style="width:100%;">                                                           \
@@ -26,7 +26,7 @@ function showFoodReviews(element) {
         review_array[i].Review +
         "</p>               \
                     <small>by " +
-        review_array[i].First_Name +
+        review_array[i].Customer_username +
         " @ " +
         review_array[i].Post_Date +
         "</small>   \
@@ -91,10 +91,10 @@ function newReview() {
 function addReview() {
   var reviews = new Object();
   // food ID is require by server to create new comment
-  reviews.Food_ID = food_array[currentIndex].Food_id;
+  reviews.RestaurantID = food_array[currentIndex].RestaurantID;
   // food title is required by server to create new review
   reviews.title = food_array[currentIndex].title;
-  reviews.First_Name = document.getElementById("nickname").value;
+  reviews.Customer_username = document.getElementById("nickname").value;
   reviews.Review = document.getElementById("userReviews").value;
   reviews.Post_Date = null;
   reviews.Rating = rating;
@@ -200,7 +200,7 @@ function editReview(element) {
 
   currentIndex = item;
 
-  document.getElementById("editnickname").value = review_array[item].First_Name;
+  document.getElementById("editnickname").value = review_array[item].Customer_username;
   document.getElementById("edituserReviews").value = review_array[item].Review;
   console.log(review_array[item].Rating);
   displayColorStar("editpop", review_array[item].Rating);
@@ -231,7 +231,7 @@ function updateReview() {
     // The HTTP method called 'PUT' is used here as we are updating data
     updateReview.open("PUT", edit_review_url, true);
     updateReview.setRequestHeader("Content-Type", "application/json");
-    review_array[currentIndex].First_Name = document.getElementById("editnickname").value;
+    review_array[currentIndex].Customer_username = document.getElementById("editnickname").value;
     review_array[currentIndex].Review = document.getElementById("edituserReviews").value;
     review_array[currentIndex].Rating = rating;
 

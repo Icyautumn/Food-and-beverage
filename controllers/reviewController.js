@@ -1,4 +1,6 @@
 "use strict";
+const UserDB = require('../models/UserDB');
+var userDB = new UserDB();
 
 const ReviewsDB = require('../models/ReviewsDB');
 const Review = require('../models/Review');
@@ -23,52 +25,76 @@ function getAllReviews(request, respond) {
 
 function addReview(request, respond) {
     var now = new Date();
-    var review = new Review(null, request.body.Customer_ID, request.body.Food_ID, request.body.Review, request.body.Rating, now.toString(),
-     request.body.First_Name, request.body.title);
-    reviewsDB.addReview(review, function (error, result) {
-        if(error) {
-            respond.json(error);
-        }
-        else {
-            respond.json(result);
-        }
-    })
-};
+    var review = new Review(null,request.body.Customer_username, request.body.RestaurantID, request.body.Review, request.body.Rating, request.body.title, now);
+     var token = request.body.token;
 
+     try {
+        // if decoded is legitmate token
+        var decoded = jwt.verify(token, secret);
+        console.log(decoded);
+        reviewsDB.addReview(review, function (error, result) {
+            if(error) {
+                respond.json(error);
+            }
+            else {
+                respond.json(result);
+            }
+        });
+    } catch (error) {
+        return respond.json({result:"invalid token"});
+        
+    }
+}
+
+    
 
 function updateReview(request, respond) {
     var now = new Date();
-    var review = new Review(parseInt(request.params.id), request.body.Customer_ID, 
-    request.body.Food_ID, request.body.Review, request.body.Rating, now.toString(), request.body.First_Name, request.body.title);
-    reviewsDB.updateReview(review, function(error, result){
-        if(error){
-            respond.json(error);
-        }
-        else{
-            const hash = result[0].password;
-            // compare the encrypted password with the clear text, if its the same, flag is true
-            var flag = bcrypt.compareSync(password, hash);
-            if (flag){
-                var token = jwt.sign(Email, secret);
-                return respond.json({result:token});
+    var token = request.body.token;
+    var review = new Review(parseInt(request.params.id), request.body.Customer_username, request.body.RestaurantID, request.body.Review, request.body.Rating, 
+    request.body.title, now);
+
+
+
+    try {
+        // if decoded is legitmate token
+        var decoded = jwt.verify(token, secret);
+        console.log(decoded);
+        reviewsDB.updateReview(review, function(error, result){
+            if(error){
+                respond.json(error);
             }
             else{
-                return respond.json({result:"invalid token"});
+                respond.json(result);
             }
-        }
-    });
+        });
+    } catch (error) {
+        return respond.json({result:"invalid token"});
+        
+    }
 }
+    
 
 function deleteReview(request, respond){
     var reviewID = request.params.id;
-    reviewsDB.deleteReview(reviewID, function(error, result){
-        if(error){
-            respond.json(error);
-        }
-        else{
-            respond.json(result);
-        }
-    });
-} 
+    var token = request.body.token;
+
+    try{
+    var decoded = jwt.verify(token, secret);
+        console.log(decoded);
+        reviewsDB.deleteReview(reviewID, function(error, result){
+            if(error){
+                respond.json(error);
+            }
+            else{
+                respond.json(result);
+            }
+        });
+    } catch (error) {
+        return respond.json({result:"invalid token"});
+        
+    }
+}
+    
 
 module.exports = {getAllReviews, addReview, updateReview, deleteReview};

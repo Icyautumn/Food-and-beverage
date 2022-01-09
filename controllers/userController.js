@@ -24,7 +24,7 @@ function getAllUser(request, respond) {
 function addUser(request, respond) {
     var now = new Date();
     // client going to input username
-    var Sign_Up_Date = now.toString()
+    var Sign_Up_Date = now
     var Email = request.body.Email;
     var Contact_Number = request.body.Contact_Number;
     var Address = request.body.Address;
@@ -43,7 +43,7 @@ function addUser(request, respond) {
             respond.json(error);
         }
         else {
-            respond.json(result);
+            return respond.json({result, username: username, email: Email});
         }
     })
 };
@@ -63,10 +63,12 @@ function loginUser(request, respond) {
         else {
             const hash = result[0].password;
             // compare the encrypted password with the clear text, if its the same, flag is true
+            console.log(hash);
             var flag = bcrypt.compareSync(password, hash);
             if (flag){
                 var token = jwt.sign(Email, secret);
-                return respond.json({result:token});
+                return respond.json({result:token, email: Email});
+                
             }
             else{
                 return respond.json({result:"invalid"});
@@ -109,15 +111,24 @@ function updateUser(request, respond) {
 
 function deleteUser(request, respond){
     var userID = request.params.id;
-    userDB.deleteUser(userID, function(error, result){
-        if(error){
-            respond.json(error);
-        }
-        else{
-            
-            respond.json(result);
-        }
-    });
+
+    try {
+        // if decoded is legitmate token
+        var decoded = jwt.verify(token, secret)
+        console.log(decoded);
+        userDB.deleteUser(userID, function(error, result){
+            if(error){
+                respond.json(error);
+            }
+            else{
+                
+                respond.json(result);
+            }
+        });
+    } catch (error) {
+        return respond.json({result:"invalid token"});
+    }
+    
 } 
 
 module.exports = {getAllUser, addUser, updateUser, deleteUser, loginUser};

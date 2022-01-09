@@ -3,8 +3,8 @@ const foodDB = require('../models/foodDB');
 
 var FoodDB = new foodDB();
 
-function getAllFood(request, respond){
-    FoodDB.getAllFood(function(error, result){
+function getAllRestaurants(request, respond){
+    FoodDB.getAllRestaurants(function(error, result){
         if(error){
             respond.json(error);
         }
@@ -14,10 +14,10 @@ function getAllFood(request, respond){
     });
 }
 
-function getSpecificFood(request, respond) {
-    var reviewID = request.params.id;
+function GetTypeOfRestaurants(request, respond) {
+    var TypeOfRestaurant = request.body.TypeOfRestaurant;
 
-    FoodDB.getSpecificFood(reviewID, function(error, result){
+    FoodDB.GetTypeOfRestaurants(TypeOfRestaurant, function(error, result){
         if(error) {
             respond.json(error);
         }
@@ -27,4 +27,4 @@ function getSpecificFood(request, respond) {
     });
 }
 
-module.exports = {getAllFood, getSpecificFood};
+module.exports = {getAllRestaurants, GetTypeOfRestaurants};

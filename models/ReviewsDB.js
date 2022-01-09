@@ -11,9 +11,9 @@ class ReviewsDB {
 
     addReview(review, callback){
         // the question marks are the placeholders
-        var sql = "INSERT INTO reviews (Customer_ID, Food_ID, Review, Rating, Post_Date, First_Name, title) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        db.query(sql, [review.getCustomer_ID(), review.getFood_ID(), review.getReview(), review.getRating(),
-            review.getPost_Date(), review.getFirst_Name(), review.gettitle()], callback);
+        var sql = "INSERT INTO reviews (Customer_username, RestaurantID, Review, Rating, title, Post_Date) VALUES (?, ?, ?, ?, ?, ?)";
+        db.query(sql, [review.getCustomer_username(), review.getRestaurantID(), review.getReview(), review.getRating(),
+            review.gettitle(), review.getPost_Date()], callback);
     }
 
     updateReview(review, callback){
