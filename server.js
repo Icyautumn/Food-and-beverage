@@ -42,7 +42,7 @@ app.route('/login').post(userController.loginUser);
 
 // favourite database 
 app.route('/favourites').get(favouriteController.getAllFavourites);
-app.route('/favourite/:id').get(favouriteController.getSpecificFavourite);
+app.route('/favourites/:id').get(favouriteController.getSpecificFavourite);
 app.route('/favourites').post(favouriteController.addFavourite);
 app.route('/favourite/:id').delete(favouriteController.deleteFavourite);
 

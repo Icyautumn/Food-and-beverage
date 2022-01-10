@@ -12,7 +12,7 @@ function showFoodReviews(element) {
   document.getElementById("reviewBody").textContent = "";
 
   for (var i = 0; i < review_array.length; i++) {
-    if (review_array[i].RestaurantID === food_array[item].RestaurantID) {
+    if (review_array[i].RestaurantID === food_array[item].Food_id) {
       document.getElementById("emptyReview").innerHTML = "";
       selectedFoodID = food_array[item].RestaurantID;
       star = "";

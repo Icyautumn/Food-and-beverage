@@ -4,7 +4,9 @@ var db = require('../db-connections');
 
 class favouriteDB{
     getAllFavourites(callback){
-        var sql = "SELECT * FROM food_n_beverage.favourite";
+        var sql = "SELECT * FROM favourite, food WHERE food.Food_id = favourite.restaurantID";
+        //  (SELECT title FROM food WHERE food.Food_id = favourite.restaurantID) AS Restaurant FROM favourite, (SELECT TypeOfRestaurant FROM food WHERE food.Food_id = favourite.restaurantID) AS Type FROM favourite)  ";
+        // FROM food_n_beverage.favourite        
         db.query(sql, callback);
     }
 

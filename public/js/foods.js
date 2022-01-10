@@ -33,7 +33,7 @@ function displayFood(category) {
         var picture = food_array[count].Picture;
         var title = food_array[count].title;
         var cell =
-          '<div class="card col-md" >\
+          '<div class="card col-md-3" >\
           <img class="card-img-top" src="' +
           picture +
           '" alt="Card image cap">\
@@ -54,9 +54,9 @@ function displayFood(category) {
       // <div class="h1 mb-3"><img class="card-img-top" src"' + picture + '" alt="Card image cap">\
     }
   }
-  if (category == "available") {
+  if (category == "not popular") {
     for (var count = 0; count < totalFood; count++) {
-      if (food_array[count].availability == category) {
+      if (food_array[count].popularity == category) {
         var picture = food_array[count].Picture;
         var title = food_array[count].title;
         var cell =
@@ -99,7 +99,7 @@ function ListPopularFood() {
 
 // This function is to display the "All Menu" food
 function ListAllFood() {
-  category = "available";
+  category = "not popular";
   displayFood(category);
   document.getElementById("PopularMenu").classList.remove("active");
   document.getElementById("AllMenu").classList.add("active");

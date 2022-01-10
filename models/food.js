@@ -1,12 +1,12 @@
 "use strict"
 
 class Food{
-    constructor(RestaurantID, TypeOfRestaurant, picture, title, availability, popularity){
+    constructor(RestaurantID, TypeOfRestaurant, picture, title, Halal, popularity){
         this.RestaurantID = RestaurantID;
         this.TypeOfRestaurant = TypeOfRestaurant;
         this.picture = picture;
         this.title = title;
-        this.availability = availability;
+        this.Halal = Halal;
         this.popularity = popularity;
     }
 
@@ -26,8 +26,8 @@ class Food{
         return this.title;
     }
 
-    getavailability() {
-        return this.availability;
+    getHalal() {
+        return this.Halal;
     }
 
     getpopularity() {

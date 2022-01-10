@@ -1,4 +1,4 @@
-var food_url="/food"
+var food_url="/restaurant"
 var food_array = []; // this creates an empty food array
 
 var foodCount = 0;
