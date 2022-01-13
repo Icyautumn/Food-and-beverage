@@ -8,6 +8,11 @@ class UserDB {
         db.query(sql, callback);
     }
 
+    getUser(Email ,callback) {
+        var sql = "SELECT distinct Email, Contact_Number, picture FROM food_n_beverage.user_database WHERE Email = ?";
+        db.query(sql, [Email], callback);
+    }
+
     loginUser(Email, callback) {
         var sql = "SELECT password FROM food_n_beverage.user_database WHERE Email = ?";
         db.query(sql,[Email], callback);
@@ -21,10 +26,11 @@ class UserDB {
         db.query(sql, [Email, Sign_Up_Date, Contact_Number, Address, postal_code, username, password, Gender, first_name, last_name], callback);
     }
 
-    updateUser(Contact_Number, Address, postal_code, Username, Gender, first_name, last_name, Email, callback){
-        console.log(Email);
-        var sql = "UPDATE user_database SET Contact_Number = ?, Address = ?, postal_code = ?, Username = ?, Gender = ?, first_name = ?, last_name = ? WHERE Email = ?";
-        return db.query(sql, [Contact_Number, Address, postal_code, Username, Gender, first_name, last_name, Email], callback);
+    updateUser(user, Email,  callback){
+        console.log(user);
+        console.log(Email+"*");
+       var sql = "UPDATE user_database SET Contact_Number = ?, Address = ?, postal_code = ?, Username = ?, Gender = ?, first_name = ?, last_name = ?, picture = ? WHERE Email = ? ";
+       db.query(sql, [user.getContact_Number(), user.getAddress(), user.getpostal_code(), user.getUsername(), user.getGender(), user.getfirst_name(), user.getlast_name(), user.getpicture(), Email], callback);
     }
 
     deleteUser(userID, callback){

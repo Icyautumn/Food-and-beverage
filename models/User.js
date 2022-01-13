@@ -1,7 +1,7 @@
 "use strict";
 
 class User {
-    constructor(CustomerID, Email, Sign_Up_Date, Contact_Number, postal_code, Username, Password, Gender){
+    constructor(CustomerID, Email, Sign_Up_Date, Contact_Number, Address, postal_code, Username, Password, Gender, first_name, last_name, picture){
         this.CustomerID = CustomerID;
         this.Email = Email;
         this.Sign_Up_Date = Sign_Up_Date;
@@ -10,10 +10,26 @@ class User {
         this.Username = Username;
         this.Password = Password;
         this.Gender = Gender;
+        this.picture = picture;
+        this.Address = Address
+        this.first_name = first_name;
+        this.last_name = last_name;
+    }
+
+    getUsername() {
+        return this.Username;
     }
 
     getCustomerID() {
         return this.CustomerID;
+    }
+
+    getfirst_name(){
+        return this.first_name;
+    }
+
+    getlast_name(){
+        return this.last_name;
     }
 
     getEmail() {
@@ -27,6 +43,9 @@ class User {
     getContact_Number() {
         return this.Contact_Number;
     }
+    getAddress(){
+        return this.Address;
+    }
 
     getpostal_code() {
         return this.postal_code;
@@ -38,6 +57,9 @@ class User {
 
     getGender(){
         return this.Gender;
+    }
+    getpicture(){
+        return this.picture;
     }
 
     

@@ -39,6 +39,7 @@ app.route('/users').post(userController.addUser);
 app.route('/users').put(userController.updateUser);
 app.route('/users/:id').delete(userController.deleteUser);
 app.route('/login').post(userController.loginUser);
+app.route('/login/user').post(userController.getUser);
 
 // favourite database 
 app.route('/favourites').get(favouriteController.getAllFavourites);

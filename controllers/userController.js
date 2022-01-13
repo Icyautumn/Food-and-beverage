@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 
 var jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const res = require('express/lib/response');
 var secret = 'somesecretkey';
 
 var userDB = new UserDB();
@@ -77,23 +78,52 @@ function loginUser(request, respond) {
     })
 };
 
-function updateUser(request, respond) {
-    
-    var Contact_Number = request.body.Contact_Number;
-    var Address = request.body.Address;
-    var postal_code = request.body.postal_code;
-    var Username = request.body.Username;
-    var Gender = request.body.Gender;
-    var Email = request.body.Email;
-    var token = request.body.token;
-    var first_name = request.body.first_name;
-    var last_name = request.body.last_name;
 
+function getUser(request, respond) {
+    var token = request.body.token;
+    
+    
+    try {
+        var decoded = jwt.verify(token, secret);
+
+        userDB.getUser(decoded, function(error, result){
+            if(error){
+                respond.json(error);
+            }
+            else{
+                respond.json(result);
+            }
+        });
+
+    } catch (error) {
+        respond.json({result: "invalid token"});
+    }
+
+    
+    
+};
+
+function updateUser(request, respond) {
+    var now = new Date();
+    var user = new User(null, null, now, request.body.Contact_Number, request.body.Address, request.body.postal_code,
+        request.body.Username, null, request.body.Gender, request.body.first_name, request.body.last_name, request.body.picture);
+    var token = request.body.token;
+    
+    // var Contact_Number = request.body.Contact_Number;
+    // var Address = request.body.Address;
+    // var postal_code = request.body.postal_code;
+    // var Username = request.body.Username;
+    // var Gender = request.body.Gender;
+    // var token = request.body.token;
+    // var first_name = request.body.first_name;
+    // var last_name = request.body.last_name;
+    // var picture = request.body.picture;
+console.log(user);
     try {
         // if decoded is legitmate token
-        var decoded = jwt.verify(token, secret)
-        console.log(decoded);
-        userDB.updateUser(Contact_Number, Address, postal_code, Username, Gender, first_name, last_name, Email, function(error, result){
+       var decoded = jwt.verify(token, secret);
+       
+        userDB.updateUser(user, decoded, function(error, result){
             if(error){
                 respond.json(error);
             }
@@ -131,4 +161,4 @@ function deleteUser(request, respond){
     
 } 
 
-module.exports = {getAllUser, addUser, updateUser, deleteUser, loginUser};
+module.exports = {getAllUser, addUser, updateUser, deleteUser, loginUser, getUser};
