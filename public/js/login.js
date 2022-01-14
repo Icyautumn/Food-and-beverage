@@ -20,6 +20,7 @@ function loginMe() {
             document.getElementById("loginMenu").style.display="none";
             
             document.getElementById("logoutMenu").style.display="block";
+            document.getElementById("editMenu").style.display="block";
 
             // token saved under application
             sessionStorage.setItem("token", token.result);

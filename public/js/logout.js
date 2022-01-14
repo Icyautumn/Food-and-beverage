@@ -1,7 +1,8 @@
 function logoutMe() {
 
     $('#registerMenu').show();
-        $('#loginMenu').show();
-        $('#logoutMenu').hide();
-        sessionStorage.removeItem("token");
+    $('#loginMenu').show();
+    $('#logoutMenu').hide();
+    $('#editMenu').hide();
+    sessionStorage.removeItem("token");
 }
