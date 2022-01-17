@@ -26,24 +26,27 @@ function getAllReviews(request, respond) {
 function addReview(request, respond) {
     var now = new Date();
     var review = new Review(null,request.body.Customer_username, request.body.RestaurantID, request.body.Review, request.body.Rating, request.body.title, now);
-     var token = request.body.token;
+    //  var token = request.body.token;
 
-     try {
-        // if decoded is legitmate token
-        var decoded = jwt.verify(token, secret);
-        console.log(decoded);
-        reviewsDB.addReview(review, function (error, result) {
-            if(error) {
-                respond.json(error);
-            }
-            else {
-                respond.json(result);
-            }
-        });
-    } catch (error) {
-        return respond.json({result:"invalid token"});
+
+     reviewsDB.addReview(review, function (error, result) {
+        if(error) {
+            respond.json(error);
+        }
+        else {
+            respond.json(result);
+        }
+    });
+
+    //  try {
+    //     // if decoded is legitmate token
+    //     var decoded = jwt.verify(token, secret);
+    //     console.log(decoded);
+       
+    // } catch (error) {
+    //     return respond.json({result:"invalid token"});
         
-    }
+    // }
 }
 
     

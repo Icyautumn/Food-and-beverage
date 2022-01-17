@@ -30,13 +30,48 @@
 
                 <input type="text" class="form-control" id="contact_number" placeholder= "Contact Number">
 
+                <label for="Address">Address</label>
+
+                <input type="text" class="form-control" id="Address" placeholder="address">
+
+                <label for="postal_code">Postal Code</label>
+
+                <input type="number" class="form-control" id="postal_code" placeholder="postal code">
+
+                <div class="form-check" name="gendersForm">
+                    <input class="form-check-input" type="radio" name="gender" id="male">
+                    <label class="form-check-label" for="flexRadioDefault1" value="male">
+                      Male
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="gender" id="female" checked>
+                    <label class="form-check-label" for="flexRadioDefault2" value="Female">
+                      Female
+                    </label>
+                  </div>
+                </div>
+
+                <label for="first_name">First Name</label>
+
+                <input type="text" class="form-control" id="first_name" placeholder="first name">
+
+
+                <label for="last_name">Last Name</label>
+
+                <input type="text" class="form-control" id="last_name" placeholder="last name">
+
+                
+
                 <label for="myinput" class="mt-5">Avatar</label>
                 <input id="myinput" type="file" onchange="encode();"/>
-                <button onclick="update();" type="button" class="btn btn-warning">Update</button>
+                
 
                 <div>
                     <img style="width:100px" alt="avatar image" id="target">
                 </div>
+
+                <button onclick="update();" type="button" class="btn btn-warning">Update</button>
             </div>
 
             
@@ -71,6 +106,7 @@
 <script src="js/checktoken.js"></script>
 <script src="js/loadProfile.js"></script>
 <script src="js/updateProfile.js"></script>
+<script src ="js/logout.js"></script>
 
 
 

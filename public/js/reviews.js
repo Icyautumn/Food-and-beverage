@@ -78,7 +78,26 @@ function showFoodDetails(element) {
   var item = element.getAttribute("item");
   currentIndex = item;
   document.getElementById("foodTitle").textContent = food_array[item].title;
+
+
+  // document.getElementById("movieTitle").textContent = movie_array[item].title;
+  // document.getElementById("moviePoster").src = movie_array[item].poster;
+  // document.getElementById("genre").textContent = movie_array[item].genre;
+  // document.getElementById("director").textContent = movie_array[item].director;
+  // document.getElementById("cast").textContent = movie_array[item].cast;
+  // document.getElementById("release").textContent = movie_array[item].release;
+  // document.getElementById("advice").textContent = movie_array[item].advice;
+  // document.getElementById("story").textContent = movie_array[item].story;
+  // document.getElementById("trailer1").src = movie_array[item].video1;
+  // document.getElementById("trailer2").src = movie_array[item].video2;
 }
+
+
+
+
+
+
+
 
 function newReview() {
   // initialize each HTML input elements in the modal window with default value
@@ -91,7 +110,7 @@ function newReview() {
 function addReview() {
   var reviews = new Object();
   // food ID is require by server to create new comment
-  reviews.RestaurantID = food_array[currentIndex].RestaurantID;
+  reviews.RestaurantID = food_array[currentIndex].Food_id;
   // food title is required by server to create new review
   reviews.title = food_array[currentIndex].title;
   reviews.Customer_username = document.getElementById("nickname").value;

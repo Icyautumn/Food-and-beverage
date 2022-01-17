@@ -45,10 +45,26 @@ function update() {
         
         
     }
-   
-    Contact_Number = document.getElementById("contact_number").value;
     Username = document.getElementById("username").value;
-    var payload = {Username: Username, picture:picture, Contact_Number: Contact_Number}
+    Contact_Number = document.getElementById("contact_number").value;
+    Address = document.getElementById("Address").value;
+    postal_code = document.getElementById("postal_code").value;
+    if(document.getElementById("male").checked == true){
+        var Gender = "male";
+    }
+    else {
+        var Gender = "female";
+    }
+
+    var first_name = document.getElementById("first_name").value;
+
+    var last_name = document.getElementById("last_name").value;
+
+
+
+    var token = sessionStorage.getItem("token");
+    var payload = {Username: Username, picture:picture, Contact_Number: Contact_Number, token: token, 
+    Address: Address, postal_code: postal_code, Gender: Gender, first_name:first_name, last_name:last_name}
 
 
     UpdateUser.send(JSON.stringify(payload));

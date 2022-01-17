@@ -5,4 +5,5 @@ function logoutMe() {
     $('#logoutMenu').hide();
     $('#editMenu').hide();
     sessionStorage.removeItem("token");
+    window.location.href="index.html";
 }

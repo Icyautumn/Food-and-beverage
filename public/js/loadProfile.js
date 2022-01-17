@@ -12,8 +12,21 @@ $(document).ready(function() {
 
         console.log(getProfile.responseText);
 
-        Contact_Number = profile[0].Contact_Number;
         Username = profile[0].Username;
+        Contact_Number = profile[0].Contact_Number;
+        Address = profile[0].Address;
+        postal_code = profile[0].postal_code;
+        if (profile[0].Gender == "male"){
+            document.getElementById("male").checked = true;
+        } else{
+            document.getElementById("female").checked = true;
+
+        } 
+
+        first_name = profile[0].first_name;
+
+        last_name = profile[0].last_name;
+
         picture = profile[0].picture;
 
         if (picture == null){
@@ -26,6 +39,12 @@ $(document).ready(function() {
 
         document.getElementById('username').value = Username;
         document.getElementById('contact_number').value = Contact_Number;
+        document.getElementById('Address').value = Address;
+        document.getElementById('postal_code').value = postal_code;
+        // document.getElementById('Gender').value = Gender;
+        document.getElementById('first_name').value = first_name;
+
+        document.getElementById('last_name').value = last_name;
         
     }
 
