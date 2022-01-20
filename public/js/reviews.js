@@ -2,6 +2,7 @@
 // whenever the user click on the "comment button"
 
 function showFoodReviews(element) {
+  username = sessionStorage.getItem("username")
   document.getElementById("emptyReview").innerHTML =
     "No Review Yet. Create one now";
   var item = element.getAttribute("item");
@@ -44,8 +45,8 @@ function showFoodReviews(element) {
         star +=
           "<img src='images/rating/star_coloured.png' style='width:50px'/>";
       }
-
-      star +=
+      if (username == review_array[i].Customer_username){
+        star +=
         "<i class='far fa-trash-alt fa-2x edit' data-dismiss='modal' item='" +
         i +
         "' onClick='deleteReview(this)' ></i>";
@@ -53,6 +54,8 @@ function showFoodReviews(element) {
         "<i class='far fa-edit fa-2x edit' data-toggle='modal' data-target='#editReviewModal' data-dismiss='modal' item='" +
         i +
         "' onClick='editReview(this)' ></i>";
+      }
+      
       document
         .getElementById("rating" + i)
         .insertAdjacentHTML("beforebegin", star + "<br/>");
@@ -78,18 +81,112 @@ function showFoodDetails(element) {
   var item = element.getAttribute("item");
   currentIndex = item;
   document.getElementById("foodTitle").textContent = food_array[item].title;
+  document.getElementById("restaurant_picture").src = food_array[item].Picture;
+  // document.getElementById("TypeOfRestaurant").textContent = food_array[item].TypeOfRestaurant;
+  document.getElementById("telephone_number").textContent = food_array[item].telephone_number;
+  document.getElementById("Monday_hours").textContent = food_array[item].Monday;
+  document.getElementById("Tuesday_hours").textContent = food_array[item].Tuesday;
+  document.getElementById("Wednesday_hours").textContent = food_array[item].Wednesday;
+  document.getElementById("Thursday_hours").textContent = food_array[item].Thursday;
+  document.getElementById("Friday_hours").textContent = food_array[item].Friday;
+  document.getElementById("Saturday_hours").textContent = food_array[item].Saturday;
+  document.getElementById("Sunday_hours").textContent = food_array[item].Sunday;
+  document.getElementById("Address").textContent = food_array[item].address;
+
+  sessionStorage.setItem("latitude", food_array[item].latitude);
+  sessionStorage.setItem("longititude", food_array[item].Longitude)
+  sessionStorage.setItem("title", food_array[item].title)
 
 
-  // document.getElementById("movieTitle").textContent = movie_array[item].title;
-  // document.getElementById("moviePoster").src = movie_array[item].poster;
-  // document.getElementById("genre").textContent = movie_array[item].genre;
-  // document.getElementById("director").textContent = movie_array[item].director;
-  // document.getElementById("cast").textContent = movie_array[item].cast;
-  // document.getElementById("release").textContent = movie_array[item].release;
-  // document.getElementById("advice").textContent = movie_array[item].advice;
-  // document.getElementById("story").textContent = movie_array[item].story;
-  // document.getElementById("trailer1").src = movie_array[item].video1;
-  // document.getElementById("trailer2").src = movie_array[item].video2;
+
+
+  let map;
+
+ 
+    map = new google.maps.Map(document.getElementById("map"), {
+      center: { lat: food_array[item].latitude, lng: food_array[item].Longitude },
+      zoom: 20,
+    });
+    
+    var infowindow = new google.maps.InfoWindow({
+      content: food_array[item].address
+    });
+    var marker = new google.maps.Marker({
+      position:  { lat: food_array[item].latitude, lng: food_array[item].Longitude },
+      map: map
+    });
+    infowindow.open(map, marker);
+
+
+  // var locations = [food_array[item].title, food_array[item].latitude, food_array[item].Longitude]
+ 
+
+
+
+  // var mapProp = {
+  //   center: new google.maps.LatLng(locations[1], locations[2]),
+  //   zoom: 5,
+  // };
+
+  // var map = new google.maps.Map(document.getElementById("map"), mapProp)
+
+  
+  // map = new google.maps.Map(document.getElementById("map"), {center:{lat:locations[1], lng:locations[2]}, zoom:4});
+  // var infowindow = new google.maps.InfoWindow();
+  // var marker, i;
+  // var markers = [];
+
+  // marker = new google.maps.Marker({
+  //   position: new google.maps.LatLng(locations[1], locations[2]),
+  //   map:map,
+  //   icon :{
+  //       url:"https://maps.google.com/mapfiles/ms/icons/restaurant.png"
+  //   }
+  // });
+
+  // markers.push(marker);
+  // google.maps.event.addListener(marker,"click", (function (marker, i){
+  //   return function() {
+  //     infowindow.setContent(locations[0]);
+  //     infowindow.open(map.marker);
+  //   }
+  // })(marker, i));
+
+  // navigator.geolocation.getCurrentPosition(
+  //   (position)=>{
+  //     const pos = {
+  //       lat:position.coords.latitude,
+  //       lng:position.coords.longitude
+  //     }
+  //     map.setCenter(pos);
+  //     map.setZoom(15);
+  //     marker = new google.maps.Marker({
+  //         position: new google.maps.LatLng(pos.lat, pos.lng),
+  //         map:map,
+  //         icon: {
+  //           url: "https://maps.google.com/mapfiles/ms/icons/red-dot.png"
+  //         }
+  //     })
+
+  //     markers.push(marker);
+
+  //     google.maps.event.addListener(marker,"click", (function (marker, i){
+  //       return function() {
+  //         infowindow.setContent("Your current location");
+  //         infowindow.open(map.marker);
+  //       }
+  //     })(marker, i));
+  //   }
+  // )
+
+
+
+  // document.getElementById("cast").textContent = food_array[item].cast;
+  // document.getElementById("release").textContent = food_array[item].release;
+  // document.getElementById("advice").textContent = food_array[item].advice;
+  // document.getElementById("story").textContent = food_array[item].story;
+  // document.getElementById("trailer1").src = food_array[item].video1;
+  // document.getElementById("trailer2").src = food_array[item].video2;
 }
 
 

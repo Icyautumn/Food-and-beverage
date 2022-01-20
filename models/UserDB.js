@@ -14,7 +14,7 @@ class UserDB {
     }
 
     loginUser(Email, callback) {
-        var sql = "SELECT password FROM food_n_beverage.user_database WHERE Email = ?";
+        var sql = "SELECT password, Username FROM food_n_beverage.user_database WHERE Email = ?";
         db.query(sql,[Email], callback);
     }
 

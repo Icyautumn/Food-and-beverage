@@ -55,28 +55,34 @@ function loginUser(request, respond) {
     var Email = request.body.Email;
     var password = request.body.password;
     
-
+    try{
+        var mail = jwt.verify(Email, secret);
+        userDB.loginUser(Email, function (error, result) {
+            if(error) {
+                respond.json(error);
+            }
+            else {
+                const hash = result[0].password;
+                var Username = result[0].Username;
+                // compare the encrypted password with the clear text, if its the same, flag is true
+                console.log(hash);
+                var flag = bcrypt.compareSync(password, hash);
+                if (flag){
+                    var token = jwt.sign(Email, secret);
+                    return respond.json({result:token, Username: Username});
+                    
+                }
+                else{
+                    return respond.json({result:"invalid"});
+                }
+            }
+        });
+    } catch (error){
+        respond.json({result:"wrong email"});
+    }
     
-    userDB.loginUser(Email, function (error, result) {
-        if(error) {
-            respond.json(error);
-        }
-        else {
-            const hash = result[0].password;
-            // compare the encrypted password with the clear text, if its the same, flag is true
-            console.log(hash);
-            var flag = bcrypt.compareSync(password, hash);
-            if (flag){
-                var token = jwt.sign(Email, secret);
-                return respond.json({result:token, email: Email});
-                
-            }
-            else{
-                return respond.json({result:"invalid"});
-            }
-        }
-    })
-};
+    
+}
 
 
 function getUser(request, respond) {

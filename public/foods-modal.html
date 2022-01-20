@@ -1,4 +1,43 @@
 <!-- this is a structure of bootstrap modal-->
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAU0Xej38SeUYDPApv0VTw5B1ZjGjpt5wM&callback=initMap"></script>
+
+<script type="text/javascript">
+    var map;
+    var marker;
+    var infowindow;
+    function initMap(){
+        var latitude = sessionStorage.getItem("latitude");
+        var longititude = sessionStorage.getItem("longititude")
+        var title = sessionStorage.getItem("title")
+        var storelocation = new google.maps.LatLng(latitude, longititude);
+        var popupContent = title;
+            
+        map = new google.maps.Map(document.getElementById('map'),{
+            center: storelocation,
+            zoom: 14,
+            myTypeId: google.maps.MapTypeId.ROADMAP
+        });
+
+        marker = new google.maps.Markers({
+            position: storelocation,
+            map: map,
+            title: "Find Us here"
+        });
+
+        infoWindow = new google.maps.InfoWindow({
+            content: popupContent,
+            maxWidth: 270
+        });
+
+        infoWindow.open(map, marker);
+
+        google.maps.event.AddListener(marker, 'click', function(){
+            infoWindow.open(map, marker);
+        });
+    }
+
+</script>
+
 <div class="modal fade" id="foodModal" tabindex="-1" role ="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -7,6 +46,80 @@
                 <button type="button" class="close bg-light" data-dismiss="modal">
                     <span>&times;</span>
                 </button>
+
+            </div>
+            <div class="modal-body">
+                <div class="row text-center">
+                    <div class="col-5">
+                        <img class="img-fluid img-thumbnail" id="restaurant_picture">
+                    </div>
+                    <div class="col-7">
+                        <table class="table table-hover table-responsive table-sm">
+                            <tr>
+                                <td><span class="badge badge-pill badge-dark font-weight-bold h3">Address</span></td>
+                                <td id="Address"></td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge badge-pill badge-dark font-weight-bold h3">telephone number</span></td>
+                                <td id="telephone_number" style=' width: 200px; word-break: break-all; word-wrap: break-word;'></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><span class="badge badge-pill badge-dark font-weight-bold h3">opening hours</span></td>
+                            
+                            </tr>
+                            <tr>
+                                <td><span class="badge badge-pill badge-dark font-weight-bold h3">Monday</span></td>
+                                <td id="Monday_hours"></td>
+                            </tr>
+
+                            <tr>
+                                <td><span class="badge badge-pill badge-dark font-weight-bold h3">Tuesday</span></td>
+                                <td id="Tuesday_hours"></td>
+                            </tr>
+
+                            <tr>
+                                <td><span class="badge badge-pill badge-dark font-weight-bold h3">Wednesday</span></td>
+                                <td id="Wednesday_hours"></td>
+                            </tr>
+
+                            <tr>
+                                <td><span class="badge badge-pill badge-dark font-weight-bold h3">Thursday</span></td>
+                                <td id="Thursday_hours"></td>
+                            </tr>
+
+                            <tr>
+                                <td><span class="badge badge-pill badge-dark font-weight-bold h3">Friday</span></td>
+                                <td id="Friday_hours"></td>
+                            </tr>
+
+                            <tr>
+                                <td><span class="badge badge-pill badge-dark font-weight-bold h3">Saturday</span></td>
+                                <td id="Saturday_hours"></td>
+                            </tr>
+
+                            <tr>
+                                <td><span class="badge badge-pill badge-dark font-weight-bold h2">Sunday</span></td>
+                                <td id="Sunday_hours"></td>
+                            </tr>
+
+                                
+
+                        
+                        </table>
+                    </div>
+                </div>
+                <!-- <div class="col-xs-12 px-3"><span class="badge badge-pill badge-dark font-weight-bold float-left">Address </span>
+                    <p id="Address"></p>
+                </div> -->
+                <div class = "container" id="map" style="width: 500px; height: 500px"></div>
+                <div class="col-xs-12 px-3 text-center">
+                    <iframe src="" frameborder="0" allowfullscreen id="trailer1"></iframe>
+                    <iframe src="" frameborder="0" allowfullscreen id="trailer2"></iframe>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary bg-dark" data-dismiss="modal">Close</button>
+                </div>
+            </div>
 
                 
                 
@@ -32,14 +145,3 @@
 
 
 
-<!-- this is a structure of Bootstrap Modal -->
-<div class="modal fade" id="movieModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header bg-dark text-center">
-                <h3 class="modal-title text-light" id="movieTitle">Modal title</h3>
-                
-            </div>
-        </div>
-    </div>
-</div>

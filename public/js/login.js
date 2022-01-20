@@ -1,3 +1,4 @@
+const User = require("../../models/User");
 
 
 function loginMe() {
@@ -8,13 +9,17 @@ function loginMe() {
     loginUser.setRequestHeader("Content-Type", "application/json");
 
     loginUser.onload=function () {
+
+
+        // var login = JSON.parse(loginUser.responseText);
         
 
         $('#loginModal').modal('hide');
-        
+        console.log(loginUser.responseText);
+        var Username = JSON.parse(loginUser.responseText)
         var token = JSON.parse(loginUser.responseText)
         console.log(token.result);
-        if (token.result != "invalid"){
+        if (token.result != "invalid" && token.result != "wrong email"){
             $('#successModal').modal('show');
             document.getElementById("registerMenu").style.display="none";
             document.getElementById("loginMenu").style.display="none";
@@ -24,6 +29,7 @@ function loginMe() {
 
             // token saved under application
             sessionStorage.setItem("token", token.result);
+            sessionStorage.setItem("username", Username.Username);
         }
         else{
             $('#failModal').modal('show');
