@@ -8,10 +8,29 @@ function registerMe() {
     RegisterUser.setRequestHeader("Content-Type", "application/json");
 
     RegisterUser.onload=function () {
+
+        var ER_DUP_ENTRY = 'ER_DUP_ENTRY';
+        let results = JSON.parse(RegisterUser.responseText);
+
+        if(results.code == ER_DUP_ENTRY){
+            typeoferror = results.sqlMessage;
+            if(typeoferror.includes("Username")){
+                alert("Username has been taken, please change");
+            }
+            else if(typeoferror.includes("Contact_Number")){
+                alert("Contact number has been taken, please change")
+            }
+            else{
+                alert("Email has been taken, please change");
+            }
+        }
+        else{
+            $('#registerModal').modal('hide');
+            $('#successModal').modal('show');
+        }
         
 
-        $('#registerModal').modal('hide');
-        $('#successModal').modal('show');
+        
 
 
     }

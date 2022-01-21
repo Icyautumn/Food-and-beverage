@@ -79,6 +79,34 @@ function displayFood(category) {
     }
   }
 
+  else {
+    for (var count = 0; count < totalFood; count++) {
+      lease = food_array[count].title.toLowerCase()
+      if (lease.includes(category)) {
+        var picture = food_array[count].Picture;
+        var title = food_array[count].title;
+        var cell =
+          '<div class="card col-md-3" ><img class="card-img-top" src="' +
+          picture +
+          '" alt="Card image cap">\
+                        <div class="card-body"><i class="far fa-comment fa-lg" style="float:left;cursor:pointer" data-toggle="modal" data-target="#reviewModal" item="' +
+          count +
+          '" onClick="showFoodReviews(this)"></i>\
+                        <h5 style="padding-left:30px;cursor:pointer" data-toggle="modal" data-target="#foodModal" class="card-title" item="' +
+          count +
+          '" onClick="showFoodDetails(this)">' +
+          title +
+          "</h5></div>\
+</div>";
+
+        table.insertAdjacentHTML("beforeend", cell);
+        foodCount++;
+      }
+    }
+  }
+
+  
+
   // count is the number of food
   // category is the food "popular"
   message = foodCount + "  Foods " + category;
@@ -104,4 +132,20 @@ function ListAllFood() {
   document.getElementById("PopularMenu").classList.remove("active");
   document.getElementById("AllMenu").classList.add("active");
   document.getElementById("aboutMenu").classList.remove("active");
+}
+
+function search_restaurant(search_term){
+  search_term = search_term.toLowerCase();
+  // filteredRestaurant = [];
+  // food_array.forEach(rest => { 
+  //   restaurant_title = rest.title.toLowerCase();
+  //   if (restaurant_title.indexOf(search_term) != -1){
+  //     console.log(rest);
+  //     filteredRestaurant.push(rest);
+      
+  //   }
+    
+  // });
+  displayFood(search_term);
+  
 }
