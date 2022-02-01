@@ -53,7 +53,7 @@ function addReview(request, respond) {
 
 function updateReview(request, respond) {
     var now = new Date();
-    var token = request.body.token;
+    // var token = request.body.token;
     var review = new Review(parseInt(request.params.id), request.body.Customer_username, request.body.RestaurantID, request.body.Review, request.body.Rating, 
     request.body.title, now);
 
@@ -61,8 +61,8 @@ function updateReview(request, respond) {
 
     try {
         // if decoded is legitmate token
-        var decoded = jwt.verify(token, secret);
-        console.log(decoded);
+        // var decoded = jwt.verify(token, secret);
+        // console.log(decoded);
         reviewsDB.updateReview(review, function(error, result){
             if(error){
                 respond.json(error);
@@ -80,11 +80,11 @@ function updateReview(request, respond) {
 
 function deleteReview(request, respond){
     var reviewID = request.params.id;
-    var token = request.body.token;
+    // var token = request.body.token;
+    
 
     try{
-    var decoded = jwt.verify(token, secret);
-        console.log(decoded);
+    // var decoded = jwt.verify(token, secret);
         reviewsDB.deleteReview(reviewID, function(error, result){
             if(error){
                 respond.json(error);

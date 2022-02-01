@@ -67,9 +67,19 @@ class UserDB {
        db.query(sql, [user.getContact_Number(), user.getAddress(), user.getpostal_code(), user.getUsername(), user.getGender(), user.getfirst_name(), user.getlast_name(), user.getpicture(), Email], callback);
     }
 
-    deleteUser(userID, callback){
-        var sql = "DELETE FROM user_database WHERE CustomerID = ?";
-        return db.query(sql,[userID], callback);
+    deleteUser(Username, callback){
+        var sql = "DELETE FROM user_database WHERE Username = ?";
+        return db.query(sql,[Username], callback);
+    }
+
+    changePassword(password, username, callback){
+        var sql = "UPDATE user_database SET password = ? WHERE Username = ?";
+        return db.query(sql, [password, username], callback);
+    }
+
+    checkPassword(username, callback){
+        var sql = "SELECT password FROM user_database WHERE Username = ?";
+        return db.query(sql, [username], callback);
     }
 }
 
@@ -101,5 +111,7 @@ class UserDB {
 //         return db.query(sql,[memberID], callback);
 //     }
 // }
+
+
 
 module.exports = UserDB;

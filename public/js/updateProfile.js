@@ -1,3 +1,5 @@
+const e = require("cors");
+
 function encode() {
 
 
@@ -19,8 +21,8 @@ function encode() {
         }
     
         fileReader.readAsDataURL(imageFile);
-    
-    
+        
+        
     }
 
 
@@ -39,10 +41,25 @@ function update() {
 
     UpdateUser.onload=function () {
 
+        var ER_DUP_ENTRY = 'ER_DUP_ENTRY';
+        let results = JSON.parse(UpdateUser.responseText);
 
-        $('#successModal').modal('show');
+        if(results.code == ER_DUP_ENTRY){
+            console.log(results.code);
+            typeoferror = results.sqlMessage;
+            console.log(typeoferror);
+            if(typeoferror.includes("Username")){
+                alert("Username has been taken, please change");
+                $('#failModal').modal('show');
+            }
+            if(typeoferror.includes("Contact_Number_UNIQUE")){
+                alert("Contact number has been taken, please change");
+                $('#failModal').modal('show');
+            }
+        }else{
+            $('#successModal').modal('show');
 
-        
+        }
         
     }
     Username = document.getElementById("username").value;
@@ -68,4 +85,107 @@ function update() {
 
 
     UpdateUser.send(JSON.stringify(payload));
+}
+
+function updatePassword() {
+    
+    var updatePwd = new XMLHttpRequest();
+
+    updatePwd.open("PUT", "/users/password", true);
+
+    updatePwd.setRequestHeader("Content-Type", "application/json");
+
+    updatePwd.onload = function() {
+
+        let result = JSON.parse(updatePwd.responseText);
+        console.log(result.result);
+        if (result.result == "invalid old password"){
+            alert("your old password is incorrect");
+        }else{
+            $('#successModal').modal('show');
+        }
+        
+    }
+
+    var old_Password = document.getElementById("old_password").value;
+    // console.log(old_Password);
+    var Password = document.getElementById("new_password").value;
+    // console.log(Password);
+    var new_password2 = document.getElementById("new_password2").value;
+    // console.log(new_password2);
+
+    if (Password == new_password2){
+        var Username = sessionStorage.getItem("username");
+        var payload = {Username:Username, old_Password: old_Password, Password: Password};
+        // console.log(payload);
+        updatePwd.send(JSON.stringify(payload))
+    }
+    else{
+        alert("your new passwords do not match")
+    }
+}
+
+function deleteAccount() {
+    var deleteAcc = new XMLHttpRequest();
+    deleteAcc.open("DELETE", "/users", true);
+
+    deleteAcc.setRequestHeader("Content-Type", "application/json");
+
+    deleteAcc.onload = function(){
+        $('#registerMenu').show();
+        $('#loginMenu').show();
+        $('#logoutMenu').hide();
+        $('#editMenu').hide();
+        sessionStorage.removeItem("token");
+        sessionStorage.removeItem("username");
+        window.location.href="index.html";
+
+    }
+
+    var Username = document.getElementById("Delete_Username").value;
+    var password = document.getElementById("Password_Delete").value;
+    var token = sessionStorage.getItem("token");
+
+    var payload = {Username:Username, Password:password, token:token};
+    deleteAcc.send(JSON.stringify(payload));
+
+}
+
+function showchangepassword(){
+    var password = document.getElementById("password");
+    var user = document.getElementById("info");
+    var delete_option = document.getElementById("delete");
+    if(password.style.display === "none"){
+        user.style.display = "none";
+        delete_option.style.display = "none"
+        password.style.display = "block";
+    }else{
+        console.log("me not working");
+    }
+}
+
+function showUser(){
+    var password = document.getElementById("password");
+    var user = document.getElementById("info");
+    var delete_option = document.getElementById("delete");
+    if(user.style.display === "none"){
+        user.style.display = "block";
+        delete_option.style.display = "none"
+        password.style.display = "none";
+    }else{
+        console.log("me not working");
+    }
+}
+
+function showdelete(){
+    var password = document.getElementById("password");
+    var user = document.getElementById("info");
+    var delete_option = document.getElementById("delete");
+    if(delete_option.style.display === "none"){
+        user.style.display = "none";
+        delete_option.style.display = "block"
+        password.style.display = "none";
+    }else{
+        console.log("me not working");
+    }
 }

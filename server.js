@@ -37,15 +37,30 @@ app.route('/reviews/:id').delete(reviewController.deleteReview);
 app.route('/users').get(userController.getAllUser);
 app.route('/users').post(userController.addUser);
 app.route('/users').put(userController.updateUser);
-app.route('/users/:id').delete(userController.deleteUser);
+app.route('/users').delete(userController.deleteUser);
 app.route('/login').post(userController.loginUser);
 app.route('/login/user').post(userController.getUser);
+app.route('/users/password').put(userController.changePassword);
 
 // favourite database 
 app.route('/favourites').get(favouriteController.getAllFavourites);
-app.route('/favourites/:id').get(favouriteController.getSpecificFavourite);
-app.route('/favourites').post(favouriteController.addFavourite);
-app.route('/favourite/:id').delete(favouriteController.deleteFavourite);
+app.route('/favourites/user').get(favouriteController.getSpecificFavourite);
+app.route('/favourites/user').post(favouriteController.addFavourite);
+app.route('/favourites').delete(favouriteController.deleteFavourite);
+
+
+// forget password start
+
+
+
+
+
+
+
+
+
+
+// forget password end
 
 
 

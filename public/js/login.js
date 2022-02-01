@@ -30,6 +30,7 @@ function loginMe() {
             // token saved under application
             sessionStorage.setItem("token", token.result);
             sessionStorage.setItem("username", Username.Username);
+            document.getElementById("user_username").innerHTML = sessionStorage.getItem("username");
         }
         else{
             $('#failModal').modal('show');

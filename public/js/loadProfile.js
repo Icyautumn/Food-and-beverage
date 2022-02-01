@@ -10,7 +10,7 @@ $(document).ready(function() {
         // take json format and convert into string 
         var profile = JSON.parse(getProfile.responseText);
 
-        console.log(getProfile.responseText);
+        // console.log(getProfile.responseText);
 
         Username = profile[0].Username;
         Contact_Number = profile[0].Contact_Number;
@@ -31,13 +31,16 @@ $(document).ready(function() {
 
         if (picture == null){
             document.getElementById("target").src = "../images/avatar/avartar.png"; // if target null then put default picture as avartar
+            document.getElementById("side-picture").src = "../images/avatar/avartar.png";
             
         } else{
             document.getElementById("target").src = picture; // if user have picture alr will picture to that picture
+            document.getElementById("side-picture").src = picture;
         }
 
 
         document.getElementById('username').value = Username;
+        document.getElementById("side-username").innerHTML = Username;
         document.getElementById('contact_number').value = Contact_Number;
         document.getElementById('Address').value = Address;
         document.getElementById('postal_code').value = postal_code;
@@ -45,6 +48,10 @@ $(document).ready(function() {
         document.getElementById('first_name').value = first_name;
 
         document.getElementById('last_name').value = last_name;
+        $('#registerMenu').hide();
+        $('#loginMenu').hide();
+        $('#logoutMenu').show();
+        $('#editMenu').show();
         
     }
 

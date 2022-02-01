@@ -61,6 +61,8 @@ function showFoodReviews(element) {
         .insertAdjacentHTML("beforebegin", star + "<br/>");
     }
   }
+
+  
 }
 
 function fetchReviews() {
@@ -93,10 +95,6 @@ function showFoodDetails(element) {
   document.getElementById("Sunday_hours").textContent = food_array[item].Sunday;
   document.getElementById("Address").textContent = food_array[item].address;
 
-  sessionStorage.setItem("latitude", food_array[item].latitude);
-  sessionStorage.setItem("longititude", food_array[item].Longitude)
-  sessionStorage.setItem("title", food_array[item].title)
-
 
 
 
@@ -118,75 +116,7 @@ function showFoodDetails(element) {
     infowindow.open(map, marker);
 
 
-  // var locations = [food_array[item].title, food_array[item].latitude, food_array[item].Longitude]
- 
-
-
-
-  // var mapProp = {
-  //   center: new google.maps.LatLng(locations[1], locations[2]),
-  //   zoom: 5,
-  // };
-
-  // var map = new google.maps.Map(document.getElementById("map"), mapProp)
-
   
-  // map = new google.maps.Map(document.getElementById("map"), {center:{lat:locations[1], lng:locations[2]}, zoom:4});
-  // var infowindow = new google.maps.InfoWindow();
-  // var marker, i;
-  // var markers = [];
-
-  // marker = new google.maps.Marker({
-  //   position: new google.maps.LatLng(locations[1], locations[2]),
-  //   map:map,
-  //   icon :{
-  //       url:"https://maps.google.com/mapfiles/ms/icons/restaurant.png"
-  //   }
-  // });
-
-  // markers.push(marker);
-  // google.maps.event.addListener(marker,"click", (function (marker, i){
-  //   return function() {
-  //     infowindow.setContent(locations[0]);
-  //     infowindow.open(map.marker);
-  //   }
-  // })(marker, i));
-
-  // navigator.geolocation.getCurrentPosition(
-  //   (position)=>{
-  //     const pos = {
-  //       lat:position.coords.latitude,
-  //       lng:position.coords.longitude
-  //     }
-  //     map.setCenter(pos);
-  //     map.setZoom(15);
-  //     marker = new google.maps.Marker({
-  //         position: new google.maps.LatLng(pos.lat, pos.lng),
-  //         map:map,
-  //         icon: {
-  //           url: "https://maps.google.com/mapfiles/ms/icons/red-dot.png"
-  //         }
-  //     })
-
-  //     markers.push(marker);
-
-  //     google.maps.event.addListener(marker,"click", (function (marker, i){
-  //       return function() {
-  //         infowindow.setContent("Your current location");
-  //         infowindow.open(map.marker);
-  //       }
-  //     })(marker, i));
-  //   }
-  // )
-
-
-
-  // document.getElementById("cast").textContent = food_array[item].cast;
-  // document.getElementById("release").textContent = food_array[item].release;
-  // document.getElementById("advice").textContent = food_array[item].advice;
-  // document.getElementById("story").textContent = food_array[item].story;
-  // document.getElementById("trailer1").src = food_array[item].video1;
-  // document.getElementById("trailer2").src = food_array[item].video2;
 }
 
 
@@ -198,18 +128,59 @@ function showFoodDetails(element) {
 
 function newReview() {
   // initialize each HTML input elements in the modal window with default value
+
+  var backOfferButton = document.getElementById("newReview");
+
+  var token = sessionStorage.getItem("token");
+  if (token != null){
   rating = 0;
   document.getElementById("userReviews").value = "";
-  document.getElementById("nickname").value = "";
+  var getReview = new XMLHttpRequest();
+  console.log("fav");
+
+    getReview.open("POST", 'http://127.0.0.1:8080/login/user', true);
+    getReview.setRequestHeader("Content-Type", "application/json");
+    getReview.onload=function() {
+
+        // take json format and convert into string 
+        var profile = JSON.parse(getReview.responseText);
+
+
+        Username = profile[0].Username;
+        console.log(Username);
+        
+        document.getElementById('nickname').value = Username;
+        
+    }
+    var payload = {token: token};
+    // chance json object into string
+    getReview.send(JSON.stringify(payload));
+  backOfferButton.dataset.target = "#newReviewModal";
+  } else{
+    alert("Please log in to add review");
+    backOfferButton.dataset.target= "#";
+  }
+  
 }
 
 // submit or send the new comment to the server to be added.
 function addReview() {
+
+ 
   var reviews = new Object();
+
+  if (food_array.length == 0){
+    // food ID is require by server to create new comment
+  reviews.RestaurantID = favourite_array[currentIndex].Food_id;
+  // food title is required by server to create new review
+  reviews.title = favourite_array[currentIndex].title;
+  }
+  else{
   // food ID is require by server to create new comment
   reviews.RestaurantID = food_array[currentIndex].Food_id;
   // food title is required by server to create new review
   reviews.title = food_array[currentIndex].title;
+  }
   reviews.Customer_username = document.getElementById("nickname").value;
   reviews.Review = document.getElementById("userReviews").value;
   reviews.Post_Date = null;
@@ -365,7 +336,9 @@ function deleteReview(element) {
 
     if(response == true){
         // get the current item
+        var token = sessionStorage.getItem("token");
         var item = element.getAttribute("item");
+        
         var delete_review_url = review_url + "/" + review_array[item].Review_ID;
         var eraseReview = new XMLHttpRequest();
 
@@ -373,6 +346,80 @@ function deleteReview(element) {
         eraseReview.onload = function() {
             fetchReviews();
         };
+
         eraseReview.send();
     }
+}
+
+
+function addToFavourites(element) {
+  // initialize each HTML input elements in the modal window with default value
+
+  // var backOfferButton = document.getElementById("newReview");
+
+  var token = sessionStorage.getItem("token");
+  if (token != null){
+      var item = element.getAttribute("item");
+      console.log(item);
+      currentIndex = item;
+      
+      var Customer_Username = sessionStorage.getItem("username");
+      var restaurant_title = item;
+      console.log(restaurant_title);
+      for(var counter = 0; counter < favourite_array.length; counter++){
+        var checker = false;
+        
+        if (favourite_array[counter].Customer_Username == Customer_Username){
+          getFavouriteData();
+          if (favourite_array[counter].restaurant_title == restaurant_title){
+            var favouriteID = favourite_array[counter].favouriteID;
+
+            checker = true;
+            break;
+          }
+        }
+      }
+      
+        console.log(checker);
+      
+      if(checker){
+        console.log("delete");
+
+        var deleteFav = new XMLHttpRequest();
+
+        deleteFav.open('DELETE', "/favourites", true);
+
+        deleteFav.setRequestHeader("Content-Type", "application/json");
+
+        deleteFav.onload = function() {
+          checker = false;
+          element.classList.toggle("fas");
+          
+
+        }
+
+        var payload = {token: token, favouriteID:favouriteID};
+
+        deleteFav.send(JSON.stringify(payload));
+      } else{
+        var addFav = new XMLHttpRequest();
+
+      console.log("add");
+
+      addFav.open('POST', "/favourites/user", true);
+
+      addFav.setRequestHeader("Content-Type", "application/json");
+      addFav.onload = function() {
+        element.classList.toggle("fas");
+        
+        checker = true;
+      }
+        
+
+      var payload = {Customer_Username: Customer_Username, restaurant_title:restaurant_title, token:token};
+      
+      addFav.send(JSON.stringify(payload));
+    }
+  
+}
 }

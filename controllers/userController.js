@@ -56,7 +56,8 @@ function loginUser(request, respond) {
     var password = request.body.password;
     
     try{
-        var mail = jwt.verify(Email, secret);
+        // var mail = jwt.verify(Email, secret);
+        // console.log(mail);
         userDB.loginUser(Email, function (error, result) {
             if(error) {
                 respond.json(error);
@@ -146,25 +147,89 @@ console.log(user);
 }
 
 function deleteUser(request, respond){
-    var userID = request.params.id;
+    var Username = request.body.Username;
+    var token = request.body.token;
+    var Password = request.body.Password;
 
-    try {
-        // if decoded is legitmate token
-        var decoded = jwt.verify(token, secret)
-        console.log(decoded);
-        userDB.deleteUser(userID, function(error, result){
-            if(error){
-                respond.json(error);
-            }
-            else{
+
+    userDB.checkPassword(Username, function(error, result){
+        if(error){
+            respond.json(error);
+        }
+        else{
+            console.log(result[0].password);
+            const hash = result[0].password;
+
+            
+            
+            try {
+                var flag = bcrypt.compareSync(Password, hash);
+
+                if(flag){
+                     // if decoded is legitmate token
+                    var decoded = jwt.verify(token, secret)
+                userDB.deleteUser(Username, function(error, result){
+                    if(error){
+                        respond.json(error);
+                    }
+                    else{
+                        
+                        respond.json(result);
+                    }
+                 });
+                } else{
+                    return respond.json("your password is not correct")
+                }
+               
                 
-                respond.json(result);
+            } catch (error) {
+                return respond.json({result:"invalid token"});
             }
-        });
-    } catch (error) {
-        return respond.json({result:"invalid token"});
-    }
     
-} 
+        }
+    });
+}
 
-module.exports = {getAllUser, addUser, updateUser, deleteUser, loginUser, getUser};
+
+function changePassword(request, respond){
+    var username = request.body.Username;
+    var old_Password = request.body.old_Password;
+    var new_password = request.body.Password;
+
+    
+    userDB.checkPassword(username, function(error, result){
+        if(error){
+            respond.json(error);
+        }
+        else{
+            console.log(result[0].password);
+            const hash = result[0].password;
+            
+
+            
+            var flag = bcrypt.compareSync(old_Password, hash);
+            console.log(flag);
+
+            if(flag){
+                new_password = bcrypt.hashSync(new_password, 10)
+                userDB.changePassword(new_password, username, function(error, result){
+                    if(error){
+                        respond.json(error);
+                    }
+                    else{
+                        respond.json(result);
+                    }
+            
+                });
+            } else{
+                return respond.json({result:"invalid old password"});
+            }
+        }
+        
+    });
+
+    
+    
+}
+
+module.exports = {getAllUser, addUser, updateUser, deleteUser, loginUser, getUser, changePassword};

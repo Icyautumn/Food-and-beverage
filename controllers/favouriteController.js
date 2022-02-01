@@ -20,9 +20,10 @@ function getAllFavourites(request, respond){
 }
 
 function getSpecificFavourite(request, respond) {
-    var CustomerID = request.params.id;
+    var Customer_Username = request.body.Customer_Username;
 
-    FavouriteDB.getSpecificFavourite(CustomerID, function(error, result){
+
+    FavouriteDB.getSpecificFavourite(Customer_Username, function(error, result){
         if(error) {
             respond.json(error);
         }
@@ -34,8 +35,7 @@ function getSpecificFavourite(request, respond) {
 
 function addFavourite(request, respond) {
     
-    var CustomerID = request.body.CustomerID;
-    var restaurantID = request.body.restaurantID;
+    var Customer_Username = request.body.Customer_Username;
     var restaurant_title = request.body.restaurant_title;
     var token = request.body.token;
 
@@ -44,7 +44,7 @@ function addFavourite(request, respond) {
         // if decoded is legitmate token
         var decoded = jwt.verify(token, secret);
         console.log(decoded);;
-        FavouriteDB.addFavourite(CustomerID, restaurantID, restaurant_title,  function (error, result) {
+        FavouriteDB.addFavourite(Customer_Username, restaurant_title,  function (error, result) {
             if(error) {
                 respond.json(error);
             }
@@ -63,7 +63,7 @@ function addFavourite(request, respond) {
 
 
 function deleteFavourite(request, respond){
-    var favouriteID = request.params.id;
+    var favouriteID = request.body.favouriteID;
     var token = request.body.token;
 
 
