@@ -15,10 +15,8 @@ function loginMe() {
         
 
         $('#loginModal').modal('hide');
-        console.log(loginUser.responseText);
         var Username = JSON.parse(loginUser.responseText)
         var token = JSON.parse(loginUser.responseText)
-        console.log(token.result);
         if (token.result != "invalid" && token.result != "wrong email"){
             $('#successModal').modal('show');
             document.getElementById("registerMenu").style.display="none";

@@ -66,7 +66,6 @@ function loginUser(request, respond) {
                 const hash = result[0].password;
                 var Username = result[0].Username;
                 // compare the encrypted password with the clear text, if its the same, flag is true
-                console.log(hash);
                 var flag = bcrypt.compareSync(password, hash);
                 if (flag){
                     var token = jwt.sign(Email, secret);
@@ -125,7 +124,6 @@ function updateUser(request, respond) {
     // var first_name = request.body.first_name;
     // var last_name = request.body.last_name;
     // var picture = request.body.picture;
-console.log(user);
     try {
         // if decoded is legitmate token
        var decoded = jwt.verify(token, secret);
@@ -157,7 +155,6 @@ function deleteUser(request, respond){
             respond.json(error);
         }
         else{
-            console.log(result[0].password);
             const hash = result[0].password;
 
             
@@ -202,13 +199,11 @@ function changePassword(request, respond){
             respond.json(error);
         }
         else{
-            console.log(result[0].password);
             const hash = result[0].password;
             
 
             
             var flag = bcrypt.compareSync(old_Password, hash);
-            console.log(flag);
 
             if(flag){
                 new_password = bcrypt.hashSync(new_password, 10)

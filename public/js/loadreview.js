@@ -12,8 +12,6 @@ $(document).ready(function() {
 
 
         Username = profile[0].Username;
-        console.log(Username);
-        
         document.getElementById('nickname').value = Username;
         
     }

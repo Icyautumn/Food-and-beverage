@@ -33,6 +33,9 @@ app.route('/reviews/:id').put(reviewController.updateReview);
 // activate the delete review method if the route is DELETE(method) /comments
 app.route('/reviews/:id').delete(reviewController.deleteReview);
 
+// find average rating from review table
+app.route("/reviews/rate").post(reviewController.avg_rating);
+
 // user database postman 
 app.route('/users').get(userController.getAllUser);
 app.route('/users').post(userController.addUser);
@@ -44,7 +47,7 @@ app.route('/users/password').put(userController.changePassword);
 
 // favourite database 
 app.route('/favourites').get(favouriteController.getAllFavourites);
-app.route('/favourites/user').get(favouriteController.getSpecificFavourite);
+app.route('/favourites/user/get').post(favouriteController.getSpecificFavourite);
 app.route('/favourites/user').post(favouriteController.addFavourite);
 app.route('/favourites').delete(favouriteController.deleteFavourite);
 

@@ -10,7 +10,6 @@ class ReviewsDB {
 
 
     addReview(review, callback){
-        console.log(review);
         // the question marks are the placeholders
         var sql = "INSERT INTO reviews (Customer_username, RestaurantID, Review, Rating, title, Post_Date) VALUES (?, ?, ?, ?, ?, ?)";
         db.query(sql, [review.getCustomer_username(), review.getRestaurantID(), review.getReview(), review.getRating(),
@@ -26,6 +25,11 @@ class ReviewsDB {
     deleteReview(ReviewID, callback){
         var sql = "DELETE FROM reviews WHERE Review_ID = ?";
         return db.query(sql,[ReviewID], callback);
+    }
+
+    avg_rating(restaurant_title, callback){
+        var sql= "SELECT avg(rating) as average FROM reviews WHERE title = ?";
+        return db.query(sql, [restaurant_title], callback);
     }
 }
 

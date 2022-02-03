@@ -43,7 +43,6 @@ function addFavourite(request, respond) {
     try {
         // if decoded is legitmate token
         var decoded = jwt.verify(token, secret);
-        console.log(decoded);;
         FavouriteDB.addFavourite(Customer_Username, restaurant_title,  function (error, result) {
             if(error) {
                 respond.json(error);
@@ -70,7 +69,6 @@ function deleteFavourite(request, respond){
     try {
         // if decoded is legitmate token
         var decoded = jwt.verify(token, secret);
-        console.log(decoded);;
         FavouriteDB.deleteFavourite(favouriteID, function(error, result){
             if(error){
                 respond.json(error);

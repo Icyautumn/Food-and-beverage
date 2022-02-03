@@ -4,11 +4,62 @@ footer {
     position: absolute;
 }
 
+/* #foodTable {
+  border: 12px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 12px solid #444444;
+  width: 70px;
+  height: 70px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  100% {
+      transform: rotate(360deg);
+  }
+}
+
+.center {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+} */
+
+
+.push-up{
+  padding-bottom:4px;
+}
+
+
+#foodTable{
+  padding-left:55px;
+}
+.modal {
+  text-align: center;
+}
+
+@media screen and (min-width: 768px) { 
+  .modal:before {
+    display: inline-block;
+    vertical-align: middle;
+    content: " ";
+    height: 100%;
+  }
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
 
 
 #filter{
   background-color: whitesmoke;
-  margin-top: 65px;
+  margin-top: 1px;
   height:650px;
   position: fixed;
   border: 4px solid violet;
@@ -80,6 +131,10 @@ footer {
     }
   }
   
+  #start_eating{
+    height: 70vh;
+  }
+
 
   body {
     background: #599fd9;
@@ -87,7 +142,14 @@ footer {
     background: linear-gradient(to right, #599fd9, #c2e59c);
     min-height: 100vh;
     overflow-x: hidden;
+    margin: auto;
   }
+
+  @media(min-width: 768px){
+    .news-input{
+        width:50%;
+    }
+}
   
   .separator {
     margin: 3rem 0;

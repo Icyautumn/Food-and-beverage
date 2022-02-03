@@ -41,7 +41,6 @@ function showFoodReviews(element) {
 
       var star = "";
       for (var j = 0; j < review_array[i].Rating; j++) {
-        console.log(i);
         star +=
           "<img src='images/rating/star_coloured.png' style='width:50px'/>";
       }
@@ -74,7 +73,6 @@ function fetchReviews() {
   request.onload = function () {
     //get all the reviews records into our review array
     review_array = JSON.parse(request.responseText);
-    console.log(review_array);
   };
   request.send();
 }
@@ -136,7 +134,6 @@ function newReview() {
   rating = 0;
   document.getElementById("userReviews").value = "";
   var getReview = new XMLHttpRequest();
-  console.log("fav");
 
     getReview.open("POST", 'http://127.0.0.1:8080/login/user', true);
     getReview.setRequestHeader("Content-Type", "application/json");
@@ -147,7 +144,6 @@ function newReview() {
 
 
         Username = profile[0].Username;
-        console.log(Username);
         
         document.getElementById('nickname').value = Username;
         
@@ -192,7 +188,6 @@ function addReview() {
 
   postReview.setRequestHeader("Content-Type", "application/json");
   postReview.onload = function () {
-    console.log("new Review sent");
     fetchReviews();
   };
 
@@ -289,7 +284,6 @@ function editReview(element) {
 
   document.getElementById("editnickname").value = review_array[item].Customer_username;
   document.getElementById("edituserReviews").value = review_array[item].Review;
-  console.log(review_array[item].Rating);
   displayColorStar("editpop", review_array[item].Rating);
 }
 
@@ -360,12 +354,12 @@ function addToFavourites(element) {
   var token = sessionStorage.getItem("token");
   if (token != null){
       var item = element.getAttribute("item");
-      console.log(item);
       currentIndex = item;
+      // console.log(favourite_array[currentIndex].favouriteID);
+
       
       var Customer_Username = sessionStorage.getItem("username");
       var restaurant_title = item;
-      console.log(restaurant_title);
       for(var counter = 0; counter < favourite_array.length; counter++){
         var checker = false;
         
@@ -380,10 +374,8 @@ function addToFavourites(element) {
         }
       }
       
-        console.log(checker);
       
       if(checker){
-        console.log("delete");
 
         var deleteFav = new XMLHttpRequest();
 
@@ -393,7 +385,8 @@ function addToFavourites(element) {
 
         deleteFav.onload = function() {
           checker = false;
-          element.classList.toggle("fas");
+          element.classList.remove("fas");
+          element.classList.add("far");
           
 
         }
@@ -404,13 +397,13 @@ function addToFavourites(element) {
       } else{
         var addFav = new XMLHttpRequest();
 
-      console.log("add");
 
       addFav.open('POST', "/favourites/user", true);
 
       addFav.setRequestHeader("Content-Type", "application/json");
       addFav.onload = function() {
-        element.classList.toggle("fas");
+        element.classList.remove("far")
+        element.classList.add("fas");
         
         checker = true;
       }
@@ -423,3 +416,36 @@ function addToFavourites(element) {
   
 }
 }
+
+function getRating(restaurant_title) {
+  var rating = new XMLHttpRequest();
+  rating.open("POST", "http://127.0.0.1:8080/reviews/rate");
+  rating.setRequestHeader("Content-Type", "application/json");
+
+  rating.onload = function(){
+
+
+    return(rating.responseText);
+  }
+
+
+  var payload = {restaurant_title: restaurant_title};
+
+  rating.send(JSON.stringify(payload));
+
+
+
+  
+
+}
+  
+
+  
+
+
+
+  
+   
+
+
+

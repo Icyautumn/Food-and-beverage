@@ -21,6 +21,19 @@ function getAllReviews(request, respond) {
     });
 }
 
+function avg_rating(request, respond) {
+    var restaurant_title = request.body.restaurant_title;
+
+    reviewsDB.avg_rating(restaurant_title, function(error, result){
+        if(error){
+            respond.json(error);
+        }
+        else{
+            respond.json(result);
+        }
+    });
+}
+
 
 
 function addReview(request, respond) {
@@ -100,4 +113,4 @@ function deleteReview(request, respond){
 }
     
 
-module.exports = {getAllReviews, addReview, updateReview, deleteReview};
+module.exports = {getAllReviews, addReview, updateReview, deleteReview, avg_rating};

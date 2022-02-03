@@ -45,9 +45,7 @@ function update() {
         let results = JSON.parse(UpdateUser.responseText);
 
         if(results.code == ER_DUP_ENTRY){
-            console.log(results.code);
             typeoferror = results.sqlMessage;
-            console.log(typeoferror);
             if(typeoferror.includes("Username")){
                 alert("Username has been taken, please change");
                 $('#failModal').modal('show');
@@ -98,7 +96,6 @@ function updatePassword() {
     updatePwd.onload = function() {
 
         let result = JSON.parse(updatePwd.responseText);
-        console.log(result.result);
         if (result.result == "invalid old password"){
             alert("your old password is incorrect");
         }else{
@@ -160,7 +157,6 @@ function showchangepassword(){
         delete_option.style.display = "none"
         password.style.display = "block";
     }else{
-        console.log("me not working");
     }
 }
 
@@ -173,7 +169,6 @@ function showUser(){
         delete_option.style.display = "none"
         password.style.display = "none";
     }else{
-        console.log("me not working");
     }
 }
 
@@ -186,6 +181,5 @@ function showdelete(){
         delete_option.style.display = "block"
         password.style.display = "none";
     }else{
-        console.log("me not working");
     }
 }
