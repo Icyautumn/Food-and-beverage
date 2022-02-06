@@ -347,11 +347,23 @@ function deleteReview(element) {
 
 
 function addToFavourites(element) {
+  
   // initialize each HTML input elements in the modal window with default value
 
   // var backOfferButton = document.getElementById("newReview");
+  var Customer_Username = sessionStorage.getItem("username");
 
-  var token = sessionStorage.getItem("token");
+  var data = JSON.stringify({
+    "Customer_Username": Customer_Username
+  });
+  
+  var xhr = new XMLHttpRequest();
+  xhr.withCredentials = true;
+  
+  xhr.addEventListener("readystatechange", function() {
+    if(this.readyState === 4) { 
+      favourite_array = (this.responseText);
+      var token = sessionStorage.getItem("token");
   if (token != null){
       var item = element.getAttribute("item");
       currentIndex = item;
@@ -360,18 +372,12 @@ function addToFavourites(element) {
       
       var Customer_Username = sessionStorage.getItem("username");
       var restaurant_title = item;
-      for(var counter = 0; counter < favourite_array.length; counter++){
-        var checker = false;
+      var checker = false;
+      console.log(favourite_array);
+      if(JSON.stringify(favourite_array).indexOf(restaurant_title) > -1 ) {
         
-        if (favourite_array[counter].Customer_Username == Customer_Username){
-          getFavouriteData();
-          if (favourite_array[counter].restaurant_title == restaurant_title){
-            var favouriteID = favourite_array[counter].favouriteID;
-
-            checker = true;
-            break;
-          }
-        }
+        checker = true;
+        
       }
       
       
@@ -384,14 +390,16 @@ function addToFavourites(element) {
         deleteFav.setRequestHeader("Content-Type", "application/json");
 
         deleteFav.onload = function() {
-          checker = false;
+          console.log("delete");
+          
           element.classList.remove("fas");
           element.classList.add("far");
-          
+          checker = false;
+
 
         }
 
-        var payload = {token: token, favouriteID:favouriteID};
+        var payload = {Customer_Username: Customer_Username, restaurant_title:restaurant_title, token:token};
 
         deleteFav.send(JSON.stringify(payload));
       } else{
@@ -402,9 +410,11 @@ function addToFavourites(element) {
 
       addFav.setRequestHeader("Content-Type", "application/json");
       addFav.onload = function() {
-        element.classList.remove("far")
+        console.log("add");
+        element.classList.remove("far");
         element.classList.add("fas");
-        
+                
+       
         checker = true;
       }
         
@@ -415,6 +425,17 @@ function addToFavourites(element) {
     }
   
 }
+       
+    }
+  });
+  
+  xhr.open("POST", "/favourites/user/get");
+  xhr.setRequestHeader("Content-Type", "application/json");
+  
+  xhr.send(data);
+
+  
+  
 }
 
 function getRating(restaurant_title) {

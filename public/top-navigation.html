@@ -1,7 +1,7 @@
  <!-- navigation bar menu-->
-    <nav class="navbar navbar-expand-lg bg-dark navbar-dark p-3">
+    <nav onload="loginMe();" class="navbar navbar-expand-lg bg-dark navbar-dark p-3 " style="position: fixed;z-index: 50;width:100%;">
 
-        <div class="container-fluid">
+        <div class="container-fluid text-center">
 
             <a href="index.html" class="navbar-brand"><img src="images/ninja_kitchen_Logo.png" width="75" height="75" class ="d-inline-block align-top" alt="ninja kitchen logo"> 
                 <img src="images/Ninja_Kitchen_Words.png" width="75" height="75" class ="d-inline-block align-top" alt="ninja kitchen words"> </a>
@@ -10,6 +10,8 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-bs-target="#navbarSupportedContent">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
+            
 
             <!-- navmenu -->
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -25,8 +27,10 @@
                     <a class="nav-link" href="#" id="logout" onclick="logoutMe()">Logout</a>
                 </li>
 
-                <li class="nav-item" id="editMenu" style="display:none;">
+                <li class="nav-item" id="editMenu" style="display:none;padding-bottom:10px;">
+                    
                     <a class="nav-link" href="edit.html">Profile</a> 
+                    <!-- <div class="media d-flex align-items-center"><img id="top-picture" alt="side avatar image" width="65" class="mr-3 rounded-circle img-thumbnail shadow-sm"></div> -->
                 </li>
                 </ul>
             </div>

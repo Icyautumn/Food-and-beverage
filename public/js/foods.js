@@ -3,7 +3,20 @@
 function getFoodData() {
 
   
+  var Customer_Username = sessionStorage.getItem("username");
+  var request_fav = new XMLHttpRequest();
+  request_fav.open("POST", "/favourites/user/get", true);
+  request_fav.setRequestHeader("Content-Type", "application/json");
 
+  request_fav.onload = function() {
+    favourite_array = JSON.parse(request_fav.responseText);
+      fetchReviews();
+      
+      
+  };
+
+  var payload = {Customer_Username: Customer_Username};
+  request_fav.send(JSON.stringify(payload));
 
 
   var request = new XMLHttpRequest();
@@ -13,7 +26,6 @@ function getFoodData() {
   request.onload = function () {
     // get all the food into our food array
     food_array = JSON.parse(request.responseText);
-    console.log(food_array);
     //Fetch the reviews as well
     fetchReviews();
 
@@ -25,21 +37,7 @@ function getFoodData() {
 
 
 
-  var Customer_Username = sessionStorage.getItem("username");
-    var request_fav = new XMLHttpRequest();
-    request_fav.open("POST", "/favourites/user/get", true);
-    request_fav.setRequestHeader("Content-Type", "application/json");
-
-    request_fav.onload = function() {
-      favourite_array = JSON.parse(request_fav.responseText);
-        console.log(favourite_array);
-        fetchReviews();
-        
-        
-    };
-
-    var payload = {Customer_Username: Customer_Username};
-    request_fav.send(JSON.stringify(payload));
+ 
 
 
   
@@ -53,7 +51,11 @@ function displayFood(category) {
 
   table.innerHTML = " ";
   totalFood = food_array.length;
+  if(Username != null){
+    document.getElementById("favourite_list").style.display = "block";
+  }
 
+  
   
   
   if (category == "Fast food" || category == "Japanese food" || category == "Western food" || category == "Malay food" || category == "Indian food" || category == "Fine dining" || category == "Thai food" || category == "Chinese food" ){
@@ -67,39 +69,34 @@ function displayFood(category) {
        }
        
        if( JSON.stringify(favourite_array).indexOf(title) > -1 ) {
-         console.log(title);
         var cell =
-        '<div class="card col-md-3 bg-secondary text-light" ><img class="card-img-top" src="' +
-        picture +
-        '" alt="Card image cap">\
-                      <div class="card-body"><i class="far fa-comment fa-lg" style="float:left;cursor:pointer" data-toggle="modal" data-target="#reviewModal" item="' +
-        count +
-        '" onClick="showFoodReviews(this)"></i>\<i class="fas fa-heart fa-lg" onClick="addToFavourites(this)" id="fav_status" style="float:left;cursor:pointer; padding-left:10px;" item ="'+ title + '"onClick="addToFavourites(this)"></i>\
-                      <h5 style="padding-left:30px;cursor:pointer" data-toggle="modal" data-target="#foodModal" class="card-title" item="' +
-        count +
-        '" onClick="showFoodDetails(this)">' +
-        title +
-        "</h5><h6>" + rating + "star</h6></div>\
-</div>";   
-        table.insertAdjacentHTML("beforeend", cell);      
-  }
-        
-          
-          
-        else {
-            var cell =
-          '<div class="card col-md-3" ><img class="card-img-top" src="' +
+          '<div class="card col-sm-2 m-4 p-3" ><img class="card-img-top mb-3" src="' +
           picture +
           '" alt="Card image cap">\
-                        <div class="card-body"><i class="far fa-comment fa-lg" style="float:left;cursor:pointer" data-toggle="modal" data-target="#reviewModal" item="' +
-          count +
-          '" onClick="showFoodReviews(this)"></i>\<i class="far fa-heart fa-lg" onClick="addToFavourites(this)" id="fav_status" style="float:left;cursor:pointer; padding-left:10px;" item ="'+ title + '"onClick="addToFavourites(this)"></i>\
-                        <h5 style="padding-left:30px;cursor:pointer" data-toggle="modal" data-target="#foodModal" class="card-title" item="' +
+                        <h5 style="cursor:pointer" data-toggle="modal" data-target="#foodModal" class="card-title" item="' +
           count +
           '" onClick="showFoodDetails(this)">' +
           title +
-          "</h5><h6>" + rating + "star</h6></div>\
-</div>";
+          "</h5><h6>" + rating + '<img src="images/rating/star_coloured.png" class="push-up" style="width:17px"</h6><div class="card-body"><i class="far fa-comment fa-lg" style="float:left;cursor:pointer; padding-left:55px" data-toggle="modal" data-target="#reviewModal" item="' +
+          count +
+          '" onClick="showFoodReviews(this)"></i>\<i class="fas fa-heart fa-lg" onClick="addToFavourites(this)" id="fav_status" style="float:left;cursor:pointer; padding-left:10px;" item ="'+ title + '"onClick="addToFavourites(this)"></i></div>\
+</div>\</div>';
+       table.insertAdjacentHTML("beforeend", cell);      
+ }
+          else{
+           
+            var cell =
+          '<div class="card col-sm-2 m-4 p-3" ><img class="card-img-top mb-3" src="' +
+          picture +
+          '" alt="Card image cap">\
+                        <h5 style="cursor:pointer" data-toggle="modal" data-target="#foodModal" class="card-title" item="' +
+          count +
+          '" onClick="showFoodDetails(this)">' +
+          title +
+          "</h5><h6>" + rating + '<img src="images/rating/star_coloured.png" class="push-up" style="width:17px"</h6><div class="card-body"><i class="far fa-comment fa-lg" style="float:left;cursor:pointer; padding-left:55px" data-toggle="modal" data-target="#reviewModal" item="' +
+          count +
+          '" onClick="showFoodReviews(this)"></i>\<i class="far fa-heart fa-lg" onClick="addToFavourites(this)" id="fav_status" style="float:left;cursor:pointer; padding-left:10px;" item ="'+ title + '"onClick="addToFavourites(this)"></i></div>\
+</div>\</div>';
         table.insertAdjacentHTML("beforeend", cell);
 
           
@@ -127,36 +124,34 @@ function displayFood(category) {
          rating = 0;
        }
        if( JSON.stringify(favourite_array).indexOf(title) > -1 ) {
-        console.log(title);
-       var cell =
-       '<div class="card col-md-3" ><img class="card-img-top" src="' +
-       picture +
-       '" alt="Card image cap">\
-                     <div class="card-body"><i class="far fa-comment fa-lg" style="float:left;cursor:pointer" data-toggle="modal" data-target="#reviewModal" item="' +
-       count +
-       '" onClick="showFoodReviews(this)"></i>\<i class="fas fa-heart fa-lg" onClick="addToFavourites(this)" id="fav_status" style="float:left;cursor:pointer; padding-left:10px;" item ="'+ title + '"onClick="addToFavourites(this)"></i>\
-                     <h5 style="padding-left:30px;cursor:pointer" data-toggle="modal" data-target="#foodModal" class="card-title" item="' +
-       count +
-       '" onClick="showFoodDetails(this)">' +
-       title +
-       "</h5><h6>" + rating + "star</h6></div>\
-</div>";   
-       table.insertAdjacentHTML("beforeend", cell);      
- }
-          else{
-            var cell =
-          '<div class="card col-md-3" ><img class="card-img-top" src="' +
+        var cell =
+          '<div class="card col-sm-2 m-4 p-3" ><img class="card-img-top mb-3" src="' +
           picture +
           '" alt="Card image cap">\
-                        <div class="card-body"><i class="far fa-comment fa-lg" style="float:left;cursor:pointer" data-toggle="modal" data-target="#reviewModal" item="' +
-          count +
-          '" onClick="showFoodReviews(this)"></i>\<i class="far fa-heart fa-lg" onClick="addToFavourites(this)" id="fav_status" style="float:left;cursor:pointer; padding-left:10px;" item ="'+ title + '"onClick="addToFavourites(this)"></i>\
-                        <h5 style="padding-left:30px;cursor:pointer" data-toggle="modal" data-target="#foodModal" class="card-title" item="' +
+                        <h5 style="cursor:pointer" data-toggle="modal" data-target="#foodModal" class="card-title" item="' +
           count +
           '" onClick="showFoodDetails(this)">' +
           title +
-          "</h5><h6>" + rating + "star</h6></div>\
-</div>";
+          "</h5><h6>" + rating + '<img src="images/rating/star_coloured.png" class="push-up" style="width:17px"</h6><div class="card-body"><i class="far fa-comment fa-lg" style="float:left;cursor:pointer; padding-left:55px" data-toggle="modal" data-target="#reviewModal" item="' +
+          count +
+          '" onClick="showFoodReviews(this)"></i>\<i class="fas fa-heart fa-lg" onClick="addToFavourites(this)" id="fav_status" style="float:left;cursor:pointer; padding-left:10px;" item ="'+ title + '"onClick="addToFavourites(this)"></i></div>\
+</div>\</div>';
+       table.insertAdjacentHTML("beforeend", cell);      
+ }
+          else{
+           
+            var cell =
+          '<div class="card col-sm-2 m-4 p-3" ><img class="card-img-top mb-3" src="' +
+          picture +
+          '" alt="Card image cap">\
+                        <h5 style="cursor:pointer" data-toggle="modal" data-target="#foodModal" class="card-title" item="' +
+          count +
+          '" onClick="showFoodDetails(this)">' +
+          title +
+          "</h5><h6>" + rating + '<img src="images/rating/star_coloured.png" class="push-up" style="width:17px"</h6><div class="card-body"><i class="far fa-comment fa-lg" style="float:left;cursor:pointer; padding-left:55px" data-toggle="modal" data-target="#reviewModal" item="' +
+          count +
+          '" onClick="showFoodReviews(this)"></i>\<i class="far fa-heart fa-lg" onClick="addToFavourites(this)" id="fav_status" style="float:left;cursor:pointer; padding-left:10px;" item ="'+ title + '"onClick="addToFavourites(this)"></i></div>\
+</div>\</div>';
         table.insertAdjacentHTML("beforeend", cell);
           }
         }
@@ -182,9 +177,8 @@ function displayFood(category) {
 
 
   
-       console.log(favourite_array);
+       
        if( JSON.stringify(favourite_array).indexOf(title) > -1 ) {
-        console.log(title);
         var cell =
           '<div class="card col-sm-2 m-4 p-3" ><img class="card-img-top mb-3" src="' +
           picture +
@@ -259,20 +253,18 @@ function displayFav() {
        }
        
        if( JSON.stringify(favourite_array).indexOf(title) > -1 ) {
-         console.log(title);
         var cell =
-        '<div class="card col-md-3" ><img class="card-img-top" src="' +
-        picture +
-        '" alt="Card image cap">\
-                      <div class="card-body"><i class="far fa-comment fa-lg" style="float:left;cursor:pointer" data-toggle="modal" data-target="#reviewModal" item="' +
-        count +
-        '" onClick="showFoodReviews(this)"></i>\<i class="fas fa-heart fa-lg" onClick="addToFavourites(this)" id="fav_status" style="float:left;cursor:pointer; padding-left:10px;" item ="'+ title + '"onClick="addToFavourites(this)"></i>\
-                      <h5 style="padding-left:30px;cursor:pointer" data-toggle="modal" data-target="#foodModal" class="card-title" item="' +
-        count +
-        '" onClick="showFoodDetails(this)">' +
-        title +
-        "</h5><h6>" + rating + "star</h6></div>\
-</div>";   
+          '<div class="card col-sm-2 m-4 p-3" ><img class="card-img-top mb-3" src="' +
+          picture +
+          '" alt="Card image cap">\
+                        <h5 style="cursor:pointer" data-toggle="modal" data-target="#foodModal" class="card-title" item="' +
+          count +
+          '" onClick="showFoodDetails(this)">' +
+          title +
+          "</h5><h6>" + rating + '<img src="images/rating/star_coloured.png" class="push-up" style="width:17px"</h6><div class="card-body"><i class="far fa-comment fa-lg" style="float:left;cursor:pointer; padding-left:55px" data-toggle="modal" data-target="#reviewModal" item="' +
+          count +
+          '" onClick="showFoodReviews(this)"></i>\<i class="fas fa-heart fa-lg" onClick="addToFavourites(this)" id="fav_status" style="float:left;cursor:pointer; padding-left:10px;" item ="'+ title + '"onClick="addToFavourites(this)"></i></div>\
+</div>\</div>';
         table.insertAdjacentHTML("beforeend", cell);      
   }
 

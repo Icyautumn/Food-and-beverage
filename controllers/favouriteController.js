@@ -62,14 +62,15 @@ function addFavourite(request, respond) {
 
 
 function deleteFavourite(request, respond){
-    var favouriteID = request.body.favouriteID;
+    var Customer_Username = request.body.Customer_Username;
+    var restaurant_title = request.body.restaurant_title;
     var token = request.body.token;
 
 
     try {
         // if decoded is legitmate token
         var decoded = jwt.verify(token, secret);
-        FavouriteDB.deleteFavourite(favouriteID, function(error, result){
+        FavouriteDB.deleteFavourite(Customer_Username, restaurant_title, function(error, result){
             if(error){
                 respond.json(error);
             }

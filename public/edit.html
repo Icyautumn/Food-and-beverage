@@ -18,15 +18,15 @@
     <title>Food Review Website</title>
 
     <script>
-        var picture, contact_number, username, token;
+        var contact_number, username, token;
         token = sessionStorage.getItem("token");
     </script>
 </head>
-<body>
+<body >
     <!-- include top navigation here -->
     <div w3-include-html="top-navigation.html"></div>
 
-
+        <div id="edit">
     
         <!-- Vertical navbar -->
         <div class="vertical-nav bg-white" id="sidebar">
@@ -157,7 +157,7 @@
                     <div class="form-group">
                         <h1>Delete Account</h1>
                         <Label for="delete_account">Username: </Label>
-                        <input type="text" class="form-control" id="Delete_Username" placeholder = "Username">
+                        <input type="text" class="form-control" id="Delete_Username" placeholder = "Username" disabled>
                         
                         <label for="delete_account">Password: </label>
                         <input type="password" class="form-control" id="Password_Delete" placeholder="Password">
@@ -170,6 +170,9 @@
                 </div>
 
             </section>            
+
+
+        </div>
          
     <div w3-include-html="success-modal.html"></div>
 

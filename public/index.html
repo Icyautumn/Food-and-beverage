@@ -22,6 +22,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Food Review Website</title>
+    </script>
     <script>
         window.onload = getFoodData();
     </script>
@@ -42,7 +43,7 @@
                       We at Ninja Kitchen wish to serve you to our best of our abilities 
                       and am providing you with the best restaurants out there
                   </p>
-                  <a href="#foodTable" ><button class="btn btn-primary btn-lg">View Restaurants</button></a>
+                  <a href="#boxes" ><button class="btn btn-primary btn-lg">View Restaurants</button></a>
                   
               </div>
               <!-- image fluid to put image in the container
@@ -53,14 +54,17 @@
   </section>
 
       <!--Newsletter-->
-  <section class="bg-primary text-light p-5">
+  <section class="bg-primary text-light p-5"  id="boxes">
     <div class="container">
         <div class="d-md-flex justify-content-between align-items-center">
-            <h3 class="mb-3 mb-md-0">Sign Up For Our Newsletter</h3>
+            <h3 class="mb-3 mb-md-0">Search for the Restaurant</h3>
 
             <div class="input-group news-input">
-                <input type="text" class="form-control" placeholder="Enter Email">
-                <button class="btn btn-dark btn-lg" type="button">Button</button>
+                <input type="text" class="form-control" id="exampleInputEmail1" placeholder="search restaurant" oninput="search_restaurant(this.value)" aria-label="search">
+                <div class="btn-toolbar d-inline-block" role="toolbar" aria-label="Toolbar with button groups">
+                    <div class="btn-group me-2" role="group" aria-label="First group">
+                        <button type="button" class="btn btn-outline-secondary active" onclick="displayFav() "style="display:none;margin-left:10px;" id="favourite_list">favourites</button>
+                    </div>
               </div>
               
         </div>
@@ -69,10 +73,47 @@
 
     <!--This is the container that holds the initial message, heading, and food -->
     <section class="p-5">
-        <div class="container-fluid">
+        <div class="container-fluid text-center ">
 
 
-          
+            <div class="btn-toolbar d-inline-block" role="toolbar" aria-label="Toolbar with button groups">
+                <div class="btn-group me-2" role="group" aria-label="First group">
+                    <button type="button" class="btn btn-outline-primary active" onclick="displayFood('') ">All Restaurants</button>
+                </div>
+
+                <div class="btn-group me-2" role="group" aria-label="Second group">
+                  <button type="button" class="btn btn-outline-primary " onclick="ListFastFood()">Fast Food</button>
+                </div>
+
+                <div class="btn-group me-2" role="group" aria-label="Third group">
+                  <button type="button" class="btn btn-outline-primary" onclick="ListHalal()">Halal</button>
+                </div>
+
+                <div class="btn-group me-2" role="group" aria-label="Fourth group">
+                    <button type="button" class="btn btn-outline-primary" onclick="ListJapaneseFood()">Japanese</button>
+                  </div>
+
+                  <div class="btn-group me-2" role="group" aria-label="Fifth group">
+                    <button type="button" class="btn btn-outline-primary" onclick="ListChineseFood()">Chinese</button>
+                  </div>
+
+                  <div class="btn-group me-2" role="group" aria-label="sixth group">
+                    <button type="button" class="btn btn-outline-primary" onclick="ListWesternFood()">Western</button>
+                  </div>
+
+                  <div class="btn-group me-2" role="group" aria-label="Fifth group">
+                    <button type="button" class="btn btn-outline-primary" onclick="ListMalayFood()">Malay</button>
+                  </div>
+
+                  <div class="btn-group me-2" role="group" aria-label="sixth group">
+                    <button type="button" class="btn btn-outline-primary" onclick="ListFineDining()">Fine Dining</button>
+                  </div>
+
+                  <div class="btn-group me-2" role="group" aria-label="sixth group">
+                    <button type="button" class="btn btn-outline-primary" onclick="ListThaiFood()">Thai</button>
+                  </div>
+
+            </div>
             
 
             <!-- The message will be shown when the pages loads and will disappear after the food are loaded -->
@@ -86,47 +127,7 @@
         
             <!-- display check box list and search bar here -->
             <div class="row text-center ">
-                <form class="col-md-2 container-fluid" id="filter">
-                    <span id="search_ninja"><img src="images/ninja_kitchen_Logo.png" width="100" height="100" class ="d-inline-block align-left" alt="ninja kitchen logo">Search </span>
-                    <div class="form-group">
-                      <input type="text" class="form-control" id="exampleInputEmail1" placeholder="search restaurant" oninput="search_restaurant(this.value)" aria-label="search">
-                    </div>
-                    <div class="btn-group-vertical btn-group-toggle col-md-10" data-toggle="buttons">
-                        <label class="btn btn-secondary active btn-block btn-lg">
-                          <input type="radio" name="options" id="option1" autocomplete="off" checked onchange="displayFood('')">All Restaurant
-                        </label>
-                        <label class="btn btn-secondary btn-block btn-lg">
-                          <input type="radio" name="options" id="option2" autocomplete="off" onchange="displayFav()">Fast Food
-                        </label>
-                        <label class="btn btn-secondary btn-block btn-lg">
-                            <input type="radio" name="options" id="option2" autocomplete="off" onchange="ListHalal()">Halal
-                          </label>
-                        
-                        <label class="btn btn-secondary btn-block btn-lg">
-                            <input type="radio" name="options" id="option3" autocomplete="off" onchange="ListChineseFood()">Chinese Food
-                        </label>
-                        <label class="btn btn-secondary btn-block btn-lg">
-                          <input type="radio" name="options" id="option4" autocomplete="off" onchange="ListJapaneseFood()">Japanese Food
-                        </label>
-                        <label class="btn btn-secondary btn-block btn-lg">
-                            <input type="radio" name="options" id="option5" autocomplete="off" onchange="ListWesternFood()">Western Food
-                        </label>
-                        <label class="btn btn-secondary btn-block btn-lg">
-                            <input type="radio" name="options" id="option6" autocomplete="off" onchange="ListMalayFood()">Malay Food
-                        </label>
-                        <label class="btn btn-secondary btn-block btn-lg">
-                            <input type="radio" name="options" id="option7" autocomplete="off" onchange="ListIndianFood()">Indian Food
-                        </label>
-
-                        <label class="btn btn-secondary btn-block btn-lg">
-                            <input type="radio" name="options" id="option3" autocomplete="off" onchange="ListThaiFood()">Thai Food
-                        </label>
-                        <label class="btn btn-secondary btn-block btn-lg">
-                        <input type="radio" name="options" id="option3" autocomplete="off" onchange="ListFineDining()"> Fine Dining
-                        </label>
-                      </div>
-
-                  </form>
+                
     
                 <!-- Displays thumbnails of the food here -->
                 
@@ -162,6 +163,8 @@
     <div w3-include-html="fail-modal.html"></div>
 
     <div w3-include-html="login-modal.html"></div>
+
+    <div w3-include-html="forget-modal.html"></div>
     <br><br>
     <!-- Include the footer here -->
     <!-- <div w3-include-html="footer.html"></div> -->
@@ -188,6 +191,8 @@
 <script src="js/checktoken.js"></script>
 <script src="js/logout.js"></script>
 <script src="js/loadreview.js"></script>
+<script src="js/forget.js"></script>
+
 
 
 <script src="js/reviews.js"></script>

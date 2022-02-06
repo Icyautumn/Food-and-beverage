@@ -63,19 +63,33 @@ function loginUser(request, respond) {
                 respond.json(error);
             }
             else {
-                const hash = result[0].password;
-                var Username = result[0].Username;
-                // compare the encrypted password with the clear text, if its the same, flag is true
-                var flag = bcrypt.compareSync(password, hash);
-                if (flag){
-                    var token = jwt.sign(Email, secret);
-                    return respond.json({result:token, Username: Username});
-                    
-                }
-                else{
+                if(result[0] == null){
+                    console.log("error")
                     return respond.json({result:"invalid"});
+                    
+                }else{
+                    const hash = result[0].password;
+                    var Username = result[0].Username;
+                    var picture = result[0].picture;
+                    // compare the encrypted password with the clear text, if its the same, flag is true
+                    var flag = bcrypt.compareSync(password, hash);
+                    if (flag){
+                        var token = jwt.sign(Email, secret);
+                    return respond.json({result:token, Username: Username, picture:picture});
+                    
+                    }
+                    else{
+                        return respond.json({result:"email dont exist"});
+                        
+                    }
+                
                 }
-            }
+                }
+
+                    
+                
+                
+            
         });
     } catch (error){
         respond.json({result:"wrong email"});
@@ -227,4 +241,20 @@ function changePassword(request, respond){
     
 }
 
-module.exports = {getAllUser, addUser, updateUser, deleteUser, loginUser, getUser, changePassword};
+
+function forgetPassword(){
+    var Email = request.body.Email;
+
+    userDB.forgetPassword(Email, function(error, result){
+        if(error){
+            respond.json(error);
+        }
+        else{
+            if(result[0] == null){
+                return respond.json({result:"email dont exist"});
+            }
+        }
+    })
+}
+
+module.exports = {getAllUser, addUser, updateUser, deleteUser, loginUser, getUser, changePassword, forgetPassword};

@@ -20,9 +20,9 @@ class favouriteDB{
         var sql = "INSERT INTO favourite (Customer_Username, restaurant_title) VALUES (?,?)";
         db.query(sql, [customer_Username, restaurant_title], callback);
     }
-    deleteFavourite(favouriteID, callback){
-        var sql = "DELETE FROM favourite WHERE favouriteID = ?";
-        return db.query(sql,[favouriteID], callback);
+    deleteFavourite(customer_Username, restaurant_title, callback){
+        var sql = "DELETE FROM favourite WHERE Customer_Username = ? AND restaurant_title = ?";
+        return db.query(sql,[customer_Username, restaurant_title], callback);
     }
 }
 

@@ -15,9 +15,16 @@ function loginMe() {
         
 
         $('#loginModal').modal('hide');
-        var Username = JSON.parse(loginUser.responseText)
-        var token = JSON.parse(loginUser.responseText)
-        if (token.result != "invalid" && token.result != "wrong email"){
+        var Username = JSON.parse(loginUser.responseText);
+        var token = JSON.parse(loginUser.responseText);
+        var picture = JSON.parse(loginUser.responseText);
+        picture = picture.picture;
+        console.log(picture);
+
+
+
+        if (token.result != "invalid" && token.result != "wrong email" && token.result != "email dont exist"){ 
+            
             $('#successModal').modal('show');
             document.getElementById("registerMenu").style.display="none";
             document.getElementById("loginMenu").style.display="none";
@@ -29,13 +36,41 @@ function loginMe() {
             sessionStorage.setItem("token", token.result);
             sessionStorage.setItem("username", Username.Username);
             document.getElementById("user_username").innerHTML = sessionStorage.getItem("username");
+            $('#registerMenu').hide();
+            $('#loginMenu').hide();
+
+            // if (picture == null){
+                
+            //     document.getElementById("top-picture").src = "../images/avatar/avartar.png";
+                
+            // } else{
+            //     document.getElementById("top-picture").src =picture;
+            // }
+            
+            window.location.href="index.html";
+            
+            
         }
+        
+        
+            
+        
         else{
+            if(token.result != "invalid"){
+                alert("password is incorrect");
+            }
+            if(token.result != "email dont exist"){
+                alert("Email does not exist");
+            }
             $('#failModal').modal('show');
         }
-
+    
+    
 
     }
+
+
+    
 
 
 
@@ -47,4 +82,5 @@ function loginMe() {
 
 
     loginUser.send(JSON.stringify(payload));
+    
 }
