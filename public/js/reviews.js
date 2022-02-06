@@ -14,14 +14,18 @@ function showFoodReviews(element) {
 
   for (var i = 0; i < review_array.length; i++) {
     if (review_array[i].RestaurantID === food_array[item].Food_id) {
+      var user_picture = review_array[i].picture;
+      if (user_picture == null){
+        user_picture = "../images/avatar/avartar.png";
+      }
       document.getElementById("emptyReview").innerHTML = "";
       selectedFoodID = food_array[item].RestaurantID;
       star = "";
       var html =
         '<div class="text-center" style="width:100%;">                                                           \
-            <div class="card">                                                                                  \
-                <div class="card-body">                                                                         \
-                    <p class="card-text" id="rating' +
+            <div class="card">                                                                                   \
+                <div class="card-body">\
+                  <img alt="side avatar image" width="65" class="mr-3 rounded-circle img-thumbnail shadow-sm" src="' + user_picture + '">\<p class="card-text" id="rating' +
         i +
         '">' +
         review_array[i].Review +
@@ -82,6 +86,7 @@ function showFoodDetails(element) {
   currentIndex = item;
   document.getElementById("foodTitle").textContent = food_array[item].title;
   document.getElementById("restaurant_picture").src = food_array[item].Picture;
+  document.getElementById("restaurant_about").textContent = food_array[item].description;
   // document.getElementById("TypeOfRestaurant").textContent = food_array[item].TypeOfRestaurant;
   document.getElementById("telephone_number").textContent = food_array[item].telephone_number;
   document.getElementById("Monday_hours").textContent = food_array[item].Monday;

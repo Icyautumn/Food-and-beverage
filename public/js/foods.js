@@ -257,7 +257,7 @@ function displayFav() {
           '<div class="card col-sm-2 m-4 p-3" ><img class="card-img-top mb-3" src="' +
           picture +
           '" alt="Card image cap">\
-                        <h5 style="cursor:pointer" data-toggle="modal" data-target="#foodModal" class="card-title" item="' +
+                        <h5 style="cursor:pointer; padding-right:100px;" data-toggle="modal" data-target="#foodModal" class="card-title" item="' +
           count +
           '" onClick="showFoodDetails(this)">' +
           title +

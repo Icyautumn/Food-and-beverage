@@ -4,7 +4,7 @@ var db = require('../db-connections');
 
 class ReviewsDB {
     getAllReviews(callback) {
-        var sql = "SELECT * FROM food_n_beverage.reviews";
+        var sql = "SELECT reviews.*, user_database.picture FROM food_n_beverage.reviews LEFT JOIN user_database ON reviews.Customer_username = user_database.Username" ;
         db.query(sql, callback);
     }
 
